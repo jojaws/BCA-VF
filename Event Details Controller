@@ -1,0 +1,205 @@
+public without sharing class EventDetaisController {
+    // Your existing variables and methods ...
+
+    public String RegBtnLabel {get;set;}
+    public String contactUserId {get;set;}
+    public String EventId {get;set;}
+    public Contact con {get;set;}
+    public BCAP_Event__c bcaEvent {get;set;}
+    public List<Event_Participant__c> evntSpeakerList {get;set;}
+    public attachment att {get;set;}
+    public String EvntStatus {get;set;}
+    public List<Event_Registration__c> EvntRegList{get;set;}
+    public List<Charity_Spotlight__c> charitySpotlights {get; set;}
+    public List<Charity_Spotlight__c> charitySpotlights {get; set;}
+
+    
+    public set<Id> contactIds = new Set<Id>();
+    public Map<String,String> StatusMap;
+    public Event_Registration__c EvntReg{get;set;}
+    public Integer TotalReg {get;set;}
+    public Boolean idDeadline {get;set;}
+    public Boolean isAlreadyInvited{get;set;}
+    public Boolean isMembershipAdmin {get;set;}
+    public Boolean isMaxMember {get;set;}
+    public Map<String,Decimal> memberBlockMap ;
+    public String Culture{get;set;}
+    
+    public String evId{get;set;}
+    
+    public String profilePhotoId{get;set;}
+    //public boolean showRoundtableTopicSection{get;set;}
+    public boolean hideDeadLineANDMemberBlock{get;set;}
+    public Integer totalConfirmed{get;set;}
+        public Integer totalAvailable{get;set;}
+
+    public String SpeakerHeadShotId{get;set;}
+
+    public EventDetaisController() {
+        con = new Contact();
+        bcaEvent = new BCAP_Event__c();
+        att = new attachment();
+        idDeadline = false;
+        isMaxMember = false;
+        EvntStatus = '';
+        RegBtnLabel = 'RSVP';
+        memberBlockMap = new Map<String,Decimal>();
+        TotalReg = 0;
+        EvntReg = new Event_Registration__c();
+        EvntRegList = new List<Event_Registration__c>(); 
+        evntSpeakerList = new List<Event_Participant__c>();
+        contactUserId = ApexPages.CurrentPage().getParameters().get('UserId');
+        EventId = ApexPages.CurrentPage().getParameters().get('EventId');
+        con = [select id, name, Membership_administrator__c, Account.Name,AccountId,title,phone,email,Membership__c, Membership_ID__c ,PhotoUrl, Vaccination_Status__c  from contact where id =: contactUserId];
+        isMembershipAdmin = con.Membership_administrator__c;
+
+        
+        StatusMap = new Map<String,String>();
+        StatusMap.put('Confirmed','You are confirmed for this event!');
+        StatusMap.put('Invited','You have been invited to this event!');
+        StatusMap.put('Declined','You have declined this event.');
+        StatusMap.put('Wait Listed','You are wait listed for this event.');
+        
+        bcaEvent = [select id,Name,Event_Date__c,Dress_Code__c  ,Event_Description__c,Event_Type__r.name,Google_Maps_Link__c,Event_Image__c,
+                    Event_Type__c, Agenda__c,  Deadline__c, Roundtable_Topic__c, Tag_Line__c, Deadline_to_register__c,Host_Account__c,Parking__c,Invite_Only__c,
+                    Publish_to_Portal__c,Start_Time__c,Venue__c,Venue_Address__c,speaker_Blog_link__c, Agenda_Item_4_Description__c, Agenda_Item_3_Description__c, 
+                    Agenda_Item_2_Description__c,Agenda_Item_1_Description__c, Linkless_Invite__c, Revenue_Goals__c, Host_Member__c,
+                    Agenda_Item_1_Time__c,Agenda_Item_2_Time__c, Agenda_Item_3_Time__c,Agenda_Item_4_Time__c,Invite_Template__c,Max_Total_Attendees__c,
+                    End_Time__c,Directions__c, Speaker_headshot_link__c, Attendance_Criteria__c,Speaker_Bio__c ,Virtual_URL__c,Virtual_Address__c,Event_Host_Logo__c
+                    from BCAP_Event__c where id =: EventId ];
+        
+            if(bcaEvent.Deadline_to_register__c < date.Today()||bcaEvent.Event_Date__c==null||bcaEvent.Event_Date__c<date.today())
+                idDeadline = true;
+                
+            evntSpeakerList = [select id,BCAP_Event__c,Comments__c,Contact__c,Contact__r.name,Participation_Role__c 
+                           from Event_Participant__c where Participation_Role__c='Speaker' and  BCAP_Event__c =:EventId];
+        
+            
+            for(Event_Registration__c eR : [select id,Contact__c,Event__c,Status__c,Member_Block__c,Memberblock_Account__c from Event_Registration__c where Contact__c =:contactUserId and Event__c =:EventId]) {
+                EvntReg = eR;
+            }
+            
+            
+            
+            // Code to enable status change for admin functionality
+            
+            if (isMembershipAdmin) {
+                }
+
+
+            // for Status and First Button Functionality
+            isAlreadyInvited=false;
+            if(EvntReg != null) {
+                if(StatusMap.containsKey(EvntReg.Status__c))
+                    EvntStatus = StatusMap.get(EvntReg.Status__c); 
+                if(EvntReg.Status__c == 'Invited' || EvntReg.Status__c == 'Selected')
+                    RegBtnLabel = 'RSVP';
+                else if(EvntReg.Status__c != null)
+                    RegBtnLabel = 'View Your RSVP';
+                if(EvntReg.Status__c == 'Invited'|| EvntReg.Status__c == 'Confirmed' )
+                    isAlreadyInvited=true;
+            }else{
+                EvntReg=Null;
+            }
+        
+            //Max functionality
+            
+            
+            
+            TotalReg = [select count() from Event_Registration__c where (Event_Registration__c.Memberblock_Membership_ID__c = :con.Membership_ID__c ) and Event__c =: EventId  and Status__c ='Confirmed'];
+            for(Member_Block__c mb : [select Account__c,Allotment__c,Event_Type__c from Member_Block__c where Account__c =: con.AccountId and Event_Type__c =: bcaEvent.Event_Type__c]) {
+                memberBlockMap.put(mb.Event_Type__c,mb.Allotment__c);   
+            }
+            if(TotalReg >= memberBlockMap.get(bcaEvent.Event_Type__c)){
+                isMaxMember = true;
+            }
+            if(memberBlockMap.get(bcaEvent.Event_Type__c)==null){//if member block is not found between account and event with eventype
+                isMaxMember = true;
+            }
+            
+            // Profile Photo ID
+            try{
+                    profilePhotoId='/servlet/servlet.FileDownload?file='+[SELECT id,Name,Parentid from attachment WHERE parentid=:contactUserId and Name LIKE '%headshot.jpg' limit 1 ].id; 
+            }catch(Exception e){
+                profilePhotoId=null;
+            }   
+            Culture=CultureText__c.getInstance(UserInfo.getOrganizationId()).Culture_Text__c;
+                
+                //speaker head shot id
+                try{
+                SpeakerHeadShotId='/servlet/servlet.FileDownload?file='+[SELECT id,Name,Parentid from attachment WHERE parentid=:bcaEvent.id and Name LIKE '%SpeakerHeadShot.jpg' limit 1 ].id; 
+            }catch(Exception e){
+                SpeakerHeadShotId=null;
+            }   
+                            
+                            
+       // Populate the charitySpotlights list by querying Charity_Spotlight__c objects related to the event
+        charitySpotlights = [SELECT Charity_description__c, Name, Logo__c FROM Charity_Spotlight__c WHERE BCA_Event__c = :EventId];
+                       
+                       
+     
+                
+            //Event Registraton list
+            for(Event_Registration__c eR : [select id,Name, Contact__c,Contact__r.name,Contact__r.Title,Contact__r.phone,Contact__r.Email,
+                                        Event__c,Status__c, Memberblock_Account_ID__c,Memberblock_Membership_ID__c,  Member_Block__c,Memberblock_Account__c,
+                                        Guest_Of__r.accountid,Guest_Of__r.name,Contact__r.account.name from Event_Registration__c 
+                                        where (Event_Registration__c.Memberblock_Membership_ID__c = :con.Membership_ID__c   ) and 
+                                               event__r.Event_Type__c=:bcaEvent.Event_Type__c and Event__c=:bcaEvent.id and Event_Registration__c.status__c!='Selected' ])
+            EvntRegList.add(eR);
+            // Event logo 
+            att=null;
+            if(bcaEvent.Host_Account__c != null) {
+                try{
+                    att=[SELECT id,Name,Parentid from attachment where parentid=:bcaEvent.Host_Account__c and name like '%Event Logo.jpg%'];
+                }catch(exception e){}
+            }
+            
+            hideDeadLineANDMemberBlock=true;
+            if(bcaEvent.Event_Type__c!=null && bcaEvent.Event_Type__r.Name=='Roundtable'){
+                if((EvntReg!=null)&&(EvntReg.Status__c=='Invited'||EvntReg.Status__c=='Confirmed'||EvntReg.Status__c=='Declined')){
+                }else if((EvntReg!=null)||(EvntReg.Status__c=='Selected'||EvntReg.Status__c=='Wait Listed'||EvntReg.Status__c=='Walk Up'))
+                        hideDeadLineANDMemberBlock=false;
+            }
+            
+        
+                totalConfirmed=0;
+                totalAvailable=0;
+
+            if(memberBlockMap.get(bcaEvent.Event_Type__c)!=null)
+                totalAvailable=Integer.valueOf(memberBlockMap.get(bcaEvent.Event_Type__c));
+            
+            totalConfirmed=TotalReg ;
+        
+                    
+    }
+
+
+
+
+
+        // Your existing code ...
+    }
+
+
+    public PageReference registration(){
+        if(RegBtnLabel!='View Your RSVP')
+            return new PageReference('/Registration?EventId='+EventId+'&UserId='+con.id);
+        if(RegBtnLabel=='View Your RSVP')
+            return new PageReference('/viewRegistration?EventId='+EventId+'&UserId='+con.id+'&erid='+EvntReg.id);
+        return null;
+    }
+    public PageReference RegisterSomeOneElse(){
+        return new PageReference('/RegisterSomeOneElse?EventId='+EventId+'&UserId='+con.id);
+    }
+    public pagereference invitesomeoneelse(){//invitesomeoneelse
+        return new PageReference('/inviteSomeOneElse?EventId='+EventId+'&UserId='+con.id);
+    }
+    public pagereference EventsHome(){
+        return new PageReference('/Home?UserId='+con.id);
+    }
+    public pagereference eventPage(){    
+        return new PageReference('/EventDetails?EventId='+evId+'&UserId='+con.id);
+    }
+}
+
+
