@@ -176,9 +176,7 @@
 <!-- END REG Deadline Row CONTAINER-->  
 
 <!--RSVP BUTTONS CONTAINER-->
-      
-          
-    
+
        <div class="alert-success">
             <!--<div class="caption" style="display:{!if(att.id != null,'','None')}"> -->
             <apex:form id="Form1" styleClass="form-horizontal">
@@ -254,9 +252,6 @@
      <!--END Registration Row CONTAINER -->
   
   <!-- END RSVP BUTTONS CONTAINER-->
-  
-  
-
 
 <!-- FULL DETAILS container -->
     
@@ -269,7 +264,6 @@
                 <br/>
                 <h3>Event Tools</h3>
                 <br/>
-                
                     <div style="padding-left:15px">
                           <span class="glyphicon glyphicon-map-marker"> </span> <strong>Directions </strong> 
                     </div>
@@ -301,8 +295,6 @@
                       <br/>
                     </div> 
                     
-                 
-                    
                  <br/>
                
                     <div style="padding-left:15px">
@@ -325,10 +317,7 @@
                       <a href="{!bcaevent.Linkless_Invite__c}" target="_blank">Click here to download Linkless Invite</a>
                         <br>
                         </br>
-                    </div>
-                   
-                   
-        
+                    </div
                 <br/>
                 
            </div>     
@@ -354,7 +343,6 @@
                 
    <!--END Speaker -->
                 
-                
    <!--Roundtable ONLY SHOW IF EVENT TYPE=Roundtable-->
                 <div style="display:{!if(bcaEvent.Event_Type__c!=null && bcaEvent.Event_Type__r.Name=='Roundtable','','none')}">
               
@@ -364,15 +352,10 @@
 
                        <apex:outputText value="{!bcaEvent.Roundtable_Topic__c}" escape="false"></apex:outputText>
                 </div>
-
-
    <!--END Roundtable -->
 
    <!--Agenda -->
-          
-             
                 <h2 style="align:left; padding-top:5%;">AGENDA</h2>
-              
 
                       <div class="col-md-3">
                        <b> {!bcaEvent.Agenda_Item_1_Time__c}  </b>
@@ -411,7 +394,6 @@
           
                 <br/>
         
-            
       <!--END Agenda -->
    
         <!--Culture -->
@@ -445,10 +427,6 @@
 
  <!-- /END Event date and time container -->
 
-            
-               
-  
-
  <!-- /REG BLOCK CONTAINER        
        
 <div class="container">  
@@ -472,9 +450,6 @@
                              <span class="alert alert-warning" style="font-size:14px">
           <apex:outputText value="Registration is closed" /></span>
                                     </div> 
-                             
-                               
-                            
                               
                                    <div class="caption" style="display:{!if((Not(idDeadline)&&(isMaxMember)),'','None')}" >
                                       <span class="alert alert-warning" style="font-size:14px">
@@ -504,26 +479,15 @@
  
 
 </div>
-
-  
-
-    
 <END reg block/>-->
 
 
        <br/> 
 
 <!--<MEMBER BLOCK INVITE ONLY - INVITED>-->
-
-
    <div class="container" style="display:{!if(bcaEvent.Invite_Only__c && (isAlreadyInvited)  ,'','None')}">
-
-
  <h4>Memberblock Summary </h4>           
-
  <apex:outputLink style=" text-decoration: none;font-size:12px; float:right; padding-right:5%;padding-top:2%;" styleClass="detail-span" value="/ViewRegistration_List_Page?UserId={!con.id}&EventId={!EventId}" >View full Registration List</apex:outputLink> 
-    
-
 
             <div class=" panel panel-default ">
                 <div class="row" style="padding-left:2%">
@@ -560,25 +524,16 @@
    <apex:outputLink style="text-decoration: none;font-size:12px;" styleClass="detail-span" value="/ViewRegistration_List_Page?UserId={!con.id}&EventId={!EventId}" >View full Registration List</apex:outputLink>  
             
             </div>
-            
-    
 
         </div>
-    </div>
-     
-             
+    </div>      
 
 <!--<MEMBER BLOCK NOT INVITE ONLY/>-->
 
        <div class="container" style="display:{!if(hideDeadLineANDMemberBlock && (bcaEvent.Event_Type__r.Name !='Open') &&  (Not(bcaEvent.Invite_Only__c)) ,'','None')}">
-
-
    <h4>Memberblock Summary </h4>           
 
  <apex:outputLink style="<!-- display:{!if(((bcaEvent.Invite_Only__c)&&(isAlreadyInvited)),'','None')} -->; text-decoration: none;font-size:12px; float:right; padding-right:5%;padding-top:2%;" styleClass="detail-span" value="/ViewRegistration_List_Page?UserId={!con.id}&EventId={!EventId}" >View full Registration List</apex:outputLink> 
-    
-
-
             <div class=" panel panel-default ">
                 <div class="row" style="padding-left:2%">
                     <div class="col-md-6 col-xs-6" style="padding:5px;"> <span>Confirmed </span> <apex:outputLabel styleClass="button -block">  {!totalConfirmed}  </apex:outputLabel>   </div>
@@ -613,13 +568,10 @@
    <apex:outputLink style="text-decoration: none;font-size:12px;" styleClass="detail-span" value="/ViewRegistration_List_Page?UserId={!con.id}&EventId={!EventId}" >View full Registration List</apex:outputLink>  
             
             </div>
-            
-    
-
+      
         </div>
     </div>
-     
-             
+      
 <!-- /Back to list of event container -->
       
 <div class="container" style="padding-top:15px;">
@@ -633,48 +585,6 @@
  <div style="padding:100px"> </div>
 <!-- /END Back to list of event container -->
 
-
-
-  
- <!-- /FOOTER -->
-    <footer class="footer-main">
-        <div class="container">
-            <div class="row">
-                
-                   <div class="col-md-4" style="line-height:24px;">
-                    <span class="footer-head" style="line-height:20px">Member Resources </span>
-                        <br/>
-                          
-                     <!-- /HIDE ADVANTAGE PROGRAM  <a class="footer-link" href="https://indd.adobe.com/view/0c53cba5-42d2-4b5a-959b-a92e80090da4" target="_blank">Advantage Program</a>
-                        <br/>-->
-                        
-                    <a class="footer-link" href="https://calendar.google.com/calendar/embed?src=bcaphiladelphia.com_bh3uiat0kl6no3nli7804gjh6g%40group.calendar.google.com&ctz=America/New_York" target="_blank">Unofficial Calendar</a>
-                    <br/>
-                    <a class="footer-link" href="https://indd.adobe.com/view/4643ec53-4a57-451e-bf15-2713b31856f7" target="_blank">Member Directory PDF</a>
-                <br/>
-                    <a class="footer-link" href="https://bcaproud.com/about-bca/guest-policy/" target="_blank">Cultural, Event + Attendance Policy</a>
-                <br/>
-                   <!--  <a class="footer-link" href="https://bcaproud.com/integrated-marketing-opportunities" target="_blank">Integrated Marketing Opportunities</a> -->
-               
-                </div>
-                
-               <div class="col-md-4">
-                    <span style="color:white;"></span>
-                </div>
-                
-                <div class="col-md-4 footer-power">
-                    <span style="color:white;">BCA Member Portal Powered by Force.com  <br/>Questions or Site Administration <a href="mailto:info@bcaphiladelphia.com"> click here</a></span>     
-                </div>
-                
-  
-                
-
-               
-            </div>
-        </div>
-    </footer>
-    <!-- /END FOOTER -->
-    
 <site:googleAnalyticsTracking />
 </body>
 </apex:page>
