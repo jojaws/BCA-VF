@@ -1,0 +1,658 @@
+<apex:page controller="AgreementController" showHeader="false" standardStylesheets="false">
+
+    <head>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 2em;
+            }
+
+            h1, h2 {
+                color: #2c3e50;
+                 font-family: "Gotham Narrow SSm A","Gotham Narrow SSm B","Helvetica Neue","Helvetica","Roboto","Arial",sans-serif !important
+
+            }
+
+             h4 {
+                color: #2c3e50;
+                 font-family: "Gotham Narrow SSm A","Gotham Narrow SSm B","Helvetica Neue","Helvetica","Roboto","Arial",sans-serif !important
+                Line-height:10px;
+                font-size:14px;
+            }
+            
+            h3 {
+                border-bottom: 1px solid #0087aa;
+                padding-bottom: 5px;
+                margin-bottom: 20px;
+                padding-top:20px;
+            }
+
+            p {
+                margin: 10px 0;
+                line-height:20px;
+                color: #434343;
+                font-size:12px;
+
+            }
+
+           .sub {
+                 margin: 10px 0;
+                 font-size:10px;
+                 color: #2E2E2E;
+                 line-height:10px;
+                        }
+                        
+            button {
+                background-color: #0087aa;
+                color: white;
+                border: none;
+                padding: 10px 15px;
+                border-radius: 0px;
+                cursor: pointer;
+                font-size: 1em;
+                transition: background-color 0.3s ease;
+            }
+
+            button:hover {
+                background-color: #000000;
+            }
+            
+                        html {
+                box-sizing: border-box
+            }
+            
+            *,*::after,*::before {
+                box-sizing: inherit
+            }
+
+            ul {
+                line-height:20px; 
+                font-size:12px;
+                color:#434343;
+                }
+
+            .container {
+                margin: 0 auto;
+                max-width: 1024px;
+                padding-left: 15px !important;
+                padding-right: 15px !important;
+            }
+            
+            
+
+            .signature {
+                margin-top: 50px;
+                border-top: 1px solid black;
+                padding-top: 20px;
+            }
+            
+            .richTextContent p {
+                line-height: 11px; /* Adjust as per your requirements */
+                font-size:16px;
+                color:#434343;
+            }
+           
+  
+            .richTextContent ol, .richTextContent ul {
+               line-height: 14px; /* Adjust as per your requirements */
+                font-size:16px;
+                color:#434343;
+            }
+        
+            .richTextContent li {
+                line-height: 14px; /* Adjust as per your requirements */
+                font-size:10px;
+                color:#434343;
+            }
+        
+        
+            .terms {
+               line-height: 18px; /* Adjust as per your requirements */
+                font-size:18px;
+                color:#434343;
+            }
+            
+            .terms p {
+                line-height: 12px; /* Adjust as per your requirements */
+                font-size:12px;
+                color:#434343;
+            }
+            
+            .payment-text {
+                font-size: 12px;
+                line-height:14px;
+            }
+        
+
+            
+            table.signature-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size:12px;
+        }
+        
+        table.signature-table td {
+            border: 1px solid #ddd;
+            padding: 5px;
+            vertical-align: bottom;
+        }
+        
+        table.signature-table td:nth-child(1) {
+            width: 60%;
+        }
+        
+        table.signature-table td:nth-child(2) {
+            width: 20%;
+        }
+
+        table.signature-table td:nth-child(3) {
+            width: 20%;
+        }
+
+        
+        .signature-line {
+            border-bottom: 1px solid black;
+            height: 50px;
+        }
+        
+    
+        .header {
+         <!--   display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0px 0;-->
+             border-bottom: 1px solid #0087aa;
+        }
+        .logo {
+            max-height: 150px;
+            max-width: 150px;
+        }
+        .agreement-level {
+            text-align: right;
+            font-weight: bold;
+            font-size:20px;
+        }
+        
+        @media print{
+        div.keep-together {
+        page-break-inside: avoid;
+        }
+       }
+
+
+        </style>
+    </head>
+
+    <body>
+    
+    
+    
+    <div class="header">
+    <center>
+           <!-- <apex:image style="max-width:100px" url="{!$Resource.BCAOD_Logo}" />-->
+    <br/>
+            <h2>BCA {!agreement.Membership_Level__c} Membership Agreement</h2>
+            
+<p>This member commitment agreement has been prepared exclusively for {!agreement.Name_s_to_appear_on_agreement__c}<br/>
+            <apex:image style="max-width:150px; padding:20px;" url="{!agreement.Logo_URL__c}" />
+
+
+</p>
+     </center>
+    </div>
+    
+
+
+
+
+         
+ <p>DATE OF AGREEMENT:     {!CASE(MONTH(DATEVALUE(NOW())), 
+     1, 'January', 
+     2, 'February', 
+     3, 'March', 
+     4, 'April', 
+     5, 'May', 
+     6, 'June', 
+     7, 'July', 
+     8, 'August', 
+     9, 'September', 
+     10, 'October', 
+     11, 'November', 
+     12, 'December', 
+     'Unknown')} {!DAY(DATEVALUE(NOW()))}, {!YEAR(DATEVALUE(NOW()))}</p>
+
+
+<p>By executing this agreement, committing to the membership obligations and paying the Membership Fee set forth hereinafter, 
+the undersigned agrees to become an {!agreement.Membership_Level__c} Member of BCA on the terms and conditions set forth. 
+{!UPPER(agreement.Account_related__r.Name)} will receive the following annual membership benefits for the term:  
+  <strong>
+{!CASE(MONTH(agreement.Start_Date__c), 
+     1, 'January', 
+     2, 'February', 
+     3, 'March', 
+     4, 'April', 
+     5, 'May', 
+     6, 'June', 
+     7, 'July', 
+     8, 'August', 
+     9, 'September', 
+     10, 'October', 
+     11, 'November', 
+     12, 'December', 
+     'Unknown')} 
+{!DAY(agreement.Start_Date__c)}, {!YEAR(agreement.Start_Date__c)} to
+ 
+{!CASE(MONTH(agreement.End_Date__c), 
+     1, 'January', 
+     2, 'February', 
+     3, 'March', 
+     4, 'April', 
+     5, 'May', 
+     6, 'June', 
+     7, 'July', 
+     8, 'August', 
+     9, 'September', 
+     10, 'October', 
+     11, 'November', 
+     12, 'December', 
+     'Unknown')} 
+{!DAY(agreement.End_Date__c)}, {!YEAR(agreement.End_Date__c)}.
+</strong>
+</p>
+
+
+ 
+
+<ul>
+<li>Exclusivity in the <strong>  {!UPPER(agreement.Exclusive_Category__r.Name)}   </strong>Core Business Category </li>
+<li>Ongoing support and implementation of your Relationship Marketing Strategy from the BCA staff</li>
+<li>Guaranteed investment level for ({!agreement.Agreement_length_in_years__c}) years</li>
+</ul>
+
+<h3>MAINTENANCE POINTS </h3>
+<p>Maintenance Points are official BCA hosted environments designed to support your overall Relationship Marketing Strategy. 
+A Maintenance Point is a deliberate point in time where you are provided the opportunity to Maintain your relationships. 
+BCA Philadelphia provides many environments that will serve as a professional and comfortable platform to deepen your relationship with fellow members, 
+clients, prospects or vendors. </p>
+
+
+
+      <h4>  Roundtables</h4>
+      
+<ul >
+<li> <strong>{!UPPER(agreement.Account_related__r.Name)}</strong> will receive select invitations to strategic BCA Roundtable (held minimum once a month) </li>
+<li><strong>{!UPPER(agreement.Account_related__r.Name)}</strong> will have the opportunity to host a business roundtable.</li>
+</ul>
+
+  <apex:outputText style="line-height: 20px; font-size:12px; color:#434343;"  value="Roundtables are BCA’s most selfless environment. Purpose is to bring members together in a much smaller more
+intimate environment. Roundtables give members an opportunity to learn more in-depth about the host member, 
+as well as providing one of our only topical settings. Roundtables consist of no more than 8-10 participants. 
+
+Members must attend a roundtable prior to scheduling their own.  Once a roundtable is attended, BCA will 
+schedule the Member’s hosted roundtable. Roundtables are scheduled approximately a year in advance and on a 
+first come, first serve basis." rendered="{!agreement.Type__c == 'New Member'}"> </apex:outputText> 
+
+      
+  <apex:outputText style="line-height: 20px; font-size:12px; color:#434343;"  value="Roundtables are BCA’s most selfless environment. Purpose is to bring members together in a much smaller more
+intimate environment. Roundtables give members an opportunity to learn more in-depth about the host member, 
+as well as providing one of our only topical settings.
+Roundtables are scheduled approximately a year in advance and on a first come, first serve basis." 
+rendered="{!agreement.Type__c == 'Renewal'}">  </apex:outputText> 
+
+
+ <!--BLACK LABEL SECTION-->
+     <h4>  Black Label Events</h4>
+<ul>
+<li> <strong>{!UPPER(agreement.Account_related__r.Name)}</strong> will receive 1 invitation to attend the 
+Black Label Event (for each approved Decision Maker).</li>
+</ul>
+<p>
+Black Label Events may only be attended by THE decision maker of your company. Black Label events are an opportunity for you and BCA Philadelphia members to strengthen your relationships in an environment conducive to your position.</p>
+
+      
+       <!--GOLF SECTIOn-->
+     <h4>       BCA Golf Outing</h4>
+<ul>
+<li> <strong>{!UPPER(agreement.Account_related__r.Name)}</strong>  will receive ({!agreement.Golf_Spots__c }) complimentary playing spots at the annual Golf Outing.
+</li>
+</ul>
+
+
+
+<!--BREAKFAST SECTION-->
+     <h4>  Speaker Series </h4>
+<ul>
+<li> <strong>{!UPPER(agreement.Account_related__r.Name)}</strong> will receive the opportunity to utilize ({!agreement.Breakfast_Seats__c}) seats at each of the Speaker Series events 
+(each attendee/seat must be registered by the deadline or seats will be released).
+</li>
+
+
+<li> Company name positioning in the program. 
+</li>
+
+<li> Exposure to the high profile speaker at each event.
+</li>
+
+<li>Photo with the prominent guest speaker for each of your attendees. 
+</li>
+</ul>
+
+<!-- <p>
+The Speaker Series events are hosted through the year and each are highlighted with a nationally known keynote speaker.  
+
+Attendees are invited for relationship building one hour prior to the start of the stage program.
+
+</p>--> 
+
+
+<!--BREAKFAST EVE-->
+     <h4> Meet and Greet </h4>
+<ul>
+<li> <strong>{!UPPER(agreement.Account_related__r.Name)}</strong> will receive the opportunity to utilize ({!agreement.Reception_Invites__c}) reserved invitations for each Meet and Greet (or similar future event).</li>
+
+<li> Personal, up-close exposure to the high profile speaker.
+</li>
+
+</ul>
+
+<!-- <p>
+Prior to the Speaker Series event (the night before for morning events, just prior for day/evening events),
+BCA hosts a meet and greet with the speaker.  
+This is an opportunity for BCA Philadelphia members and their guests to continue to strengthen their relationships with each other.  
+Breakfast Eve is a great environment to invite a guest who may prefer a small, more intimate environment.
+
+</p>--> 
+
+
+
+<!--CUSTOM-->
+     <h4> Custom Events</h4>
+
+<ul>
+<li> <strong>{!UPPER(agreement.Account_related__r.Name)}</strong> 
+may also receive an allotted number of allowed guests to custom events. 
+Custom Events are changed annually, based on the needs of the membership. 
+Below are examples of custom events <strong><i>(these are not guaranteed inventory, just examples)</i></strong>.
+</li>
+
+</ul>
+
+<div style="padding-left:100px">
+<i>
+<p ><strong>Bootcamp: </strong>The Bootcamp typically includes a session of team building or learning, 
+and then a reception or meet and greet, 
+the overall experience features ample quality relationship building time in a setting outside of our normal geography.
+</p>
+<p ><strong>March Madness:</strong> An event centered around the college basketball tournament, featuring large screen televisions, 
+food and beverages, and break out meeting space. 
+Members are encouraged to extend invitations to their customers, 
+prospects and vendors as a day to forge stronger relationships in a social setting.
+</p></i>
+</div>
+
+
+  <div class="keep-together">
+
+  <h3>MARKETING INTEGRATION </h3>
+<apex:repeat value="{!marketingPackages}" var="pkg">
+   
+    <div>
+           <h4> {!pkg.Formal_Name_for_Agreement__c}</h4>
+           <p>{!pkg.Description__c}</p>
+<ul>
+<apex:outputPanel rendered="{!AND(pkg.Inventory_Item_1__c != '--NONE--', pkg.Inventory_Item_1__c != '')}">
+  <li>{!pkg.Inventory_Item_1__c}</li>
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!AND(pkg.Inventory_Item_2__c != '--NONE--', pkg.Inventory_Item_2__c != '')}">
+  <li>{!pkg.Inventory_Item_2__c}</li>
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!AND(pkg.Inventory_Item_3__c != '--NONE--', pkg.Inventory_Item_3__c != '')}">
+  <li>{!pkg.Inventory_Item_3__c}</li>
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!AND(pkg.Inventory_Item_4__c != '--NONE--', pkg.Inventory_Item_4__c != '')}">
+  <li>{!pkg.Inventory_Item_4__c}</li>
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!AND(pkg.Inventory_Item_5__c != '--NONE--', pkg.Inventory_Item_5__c != '')}">
+  <li>{!pkg.Inventory_Item_5__c}</li>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!AND(pkg.Inventory_Item_6__c != '--NONE--', pkg.Inventory_Item_6__c != '')}">
+  <li>{!pkg.Inventory_Item_6__c}</li>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!AND(pkg.Inventory_Item_7__c != '--NONE--', pkg.Inventory_Item_7__c != '')}">
+  <li>{!pkg.Inventory_Item_7__c}</li>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!AND(pkg.Inventory_Item_8__c != '--NONE--', pkg.Inventory_Item_8__c != '')}">
+  <li>{!pkg.Inventory_Item_8__c}</li>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!AND(pkg.Inventory_Item_9__c != '--NONE--', pkg.Inventory_Item_9__c != '')}">
+  <li>{!pkg.Inventory_Item_9__c}</li>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!AND(pkg.Inventory_Item_10__c != '--NONE--', pkg.Inventory_Item_10__c != '')}">
+  <li>{!pkg.Inventory_Item_10__c}</li>
+</apex:outputPanel>
+<li> <strong>{!pkg.Additional_Tickets__c}</strong> invitations.</li>
+</ul>  
+     <div class="terms">
+       <p>
+            <apex:outputField value="        {!pkg.Fine_Print__c}" />
+        </p>
+        </div>
+    
+    </div>
+    </apex:repeat>
+            
+    </div>
+    
+    
+<apex:repeat value="{!marketingPackages2}" var="pkg2">
+   
+    <div>
+           <h4> {!pkg2.Formal_Name_for_Agreement__c}</h4>
+           <p>{!pkg2.Description__c}</p>
+<ul>
+<apex:outputPanel rendered="{!AND(pkg2.Inventory_Item_1__c != '--NONE--', pkg2.Inventory_Item_1__c != '')}">
+  <li>{!pkg2.Inventory_Item_1__c}</li>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!AND(pkg2.Inventory_Item_2__c != '--NONE--', pkg2.Inventory_Item_2__c != '')}">
+  <li>{!pkg2.Inventory_Item_2__c}</li>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!AND(pkg2.Inventory_Item_3__c != '--NONE--', pkg2.Inventory_Item_3__c != '')}">
+  <li>{!pkg2.Inventory_Item_3__c}</li>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!AND(pkg2.Inventory_Item_4__c != '--NONE--', pkg2.Inventory_Item_4__c != '')}">
+  <li>{!pkg2.Inventory_Item_4__c}</li>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!AND(pkg2.Inventory_Item_5__c != '--NONE--', pkg2.Inventory_Item_5__c != '')}">
+  <li>{!pkg2.Inventory_Item_5__c}</li>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!AND(pkg2.Inventory_Item_6__c != '--NONE--', pkg2.Inventory_Item_6__c != '')}">
+  <li>{!pkg2.Inventory_Item_6__c}</li>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!AND(pkg2.Inventory_Item_7__c != '--NONE--', pkg2.Inventory_Item_7__c != '')}">
+  <li>{!pkg2.Inventory_Item_7__c}</li>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!AND(pkg2.Inventory_Item_8__c != '--NONE--', pkg2.Inventory_Item_8__c != '')}">
+  <li>{!pkg2.Inventory_Item_8__c}</li>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!AND(pkg2.Inventory_Item_9__c != '--NONE--', pkg2.Inventory_Item_9__c != '')}">
+  <li>{!pkg2.Inventory_Item_9__c}</li>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!AND(pkg2.Inventory_Item_10__c != '--NONE--', pkg2.Inventory_Item_10__c != '')}">
+  <li>{!pkg2.Inventory_Item_10__c}</li>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!IF(pkg2.Additional_Tickets__c != null && pkg2.Additional_Tickets__c > 0, true, false)}">
+  <li>{!pkg2.Additional_Tickets__c} invitations.</li>
+</apex:outputPanel>
+</ul>  
+     <div class="terms">
+            <p>
+             <i>   <apex:outputField value="{!pkg2.Fine_Print__c}" /></i>
+            </p>
+        </div>
+    </div>
+</apex:repeat>
+    
+
+
+
+<h3>MEMBER CONNECTION MARKETING </h3>
+
+<ul>
+<li>
+ <strong>{!UPPER(agreement.Account_related__r.Name)}</strong>  will receive a listing on the BCA Member Portal with your company description, contact information and a hyperlink to your website.
+ </li>
+
+<li> <strong>{!UPPER(agreement.Account_related__r.Name)}</strong>  will receive access to the BCA Blog, a dedicated online section of our website which lists member-to-member news, offerings and announcements.{!UPPER(agreement.Account_related__r.Name)} will also be eligible to list announcements, discounts or offers on the BCA Blog.
+</li>
+
+ <li><strong>{!UPPER(agreement.Account_related__r.Name)}</strong>  will have access to the Member Portal database* which contains information on each member and their activation team, as well as guest attendee information.  This valuable Member tool will allow you to strategically plan for your relationship building time at each BCA Experience. 
+</li>
+</ul>
+
+<p style="font-size:12px; line-height:12px;"> <i>*The database is NOT intended to be used for cold calls or mass distribution, but should be used as a source to review prospective relationships and strategic partners for your company.   BCA Philadelphia staff can assist in bridging a relationship should assistance be requested.  Any Member abusing the database may lose their access to this information and risks membership revocation.
+</i></p>
+
+      
+
+
+        <!-- MEMBER COMMITMENT -->
+<div class="richTextContent">
+<h3 style="padding-top:20px">MEMBER COMMITMENT </h3>
+
+<p>
+<apex:outputField value="{!agreement.Agreement_Parent__r.Member_Commitment__c}" />
+</p>
+</div >
+
+
+
+
+        <!--TERMS -->
+      
+      <div class="terms">
+        <h4>Membership Fee and  Payment Terms :&nbsp; </h4>
+        
+        <!-- <apex:outputText value="${0, number, integer}">
+                    <apex:param value="{!agreement.Total_Annual_Amount__c}" />
+                </apex:outputText> -->
+               
+             
+             
+<!-- PAYMENT TERMS by REV #-->
+
+
+<apex:repeat value="{!revenueData}" var="revWrap">
+    <!-- Only render if there are payments for this revenue -->
+    <apex:outputPanel rendered="{!revWrap.payments.size > 0}" style="margin-bottom: 20px;">
+        
+        <!-- Display Revenue Record details here -->
+              <strong> 
+              <apex:outputText value="Year ({!revWrap.rev.Revenue_no_this_agreement__c}): " styleClass="payment-text" />
+              
+              <apex:outputText value="${0, number, integer}" styleClass="payment-text">
+                    <apex:param value="{!revWrap.rev.CALCULATED_TOTAL__c}" />
+              </apex:outputText>
+              <apex:outputText value=":" styleClass="payment-text"/>
+              </strong>
+            
+
+
+        <!-- Display related Payment Terms for this Revenue record -->
+        <apex:repeat value="{!revWrap.payments}" var="term">
+            <apex:outputText value="${0, number, integer}" styleClass="payment-text">
+                <apex:param value="{!term.Amount_Due__c}" />
+            </apex:outputText>
+            <apex:outputText value=" due by" styleClass="payment-text"> </apex:outputText> 
+            <apex:outputText value="{0, date, MM/dd/yyyy}" styleClass="payment-text">
+                <apex:param value="{!term.Due_Date__c}" />
+            </apex:outputText>
+            <!-- Check if this is NOT the last term in the list; if it's not, display a comma -->
+            <apex:outputText rendered="{!term != revWrap.payments[revWrap.payments.size - 1]}" value=", ">
+            </apex:outputText>
+        </apex:repeat>
+        
+        <!-- Adding a line break after each Revenue Record's payments -->
+        <br/>
+    </apex:outputPanel>
+</apex:repeat>
+
+
+        
+     </div>                 
+
+               
+           
+<!-- LEGALESE  -->
+
+ <!-- Only render if there is NO OUT CLAUSE -->
+<apex:outputPanel rendered="{!NOT(agreement.X1_year_out_clause__c) && NOT(agreement.X3_year_out_clause__c)}">
+    <div class="richTextContent">
+        <p>
+            <apex:outputField value="{!agreement.Agreement_Parent__r.Legalese__c}" />
+        </p>
+    </div>
+</apex:outputPanel>
+<br/>
+
+
+   <!--    <div class="richTextContent">
+<p>
+
+<apex:outputField value="{!agreement.Agreement_Parent__r.Legalese__c}" />
+</p>
+ 
+</div ><br/>-->
+
+
+
+        <!-- Signature Section -->
+  
+         <table class="signature-table">
+        <!-- Top row with signature line -->
+        <tr>
+            <td class="signature-line"></td>
+            <td class="signature-line"></td>
+            <td class="signature-line"></td>
+        </tr>
+        <!-- Bottom row with labels -->
+        <tr>
+            <td>Authorized Signature</td>
+            <td>Title</td>
+            <td>Date</td>
+        </tr>
+    </table>
+
+  
+        <div style="padding-top:50px;"></div>
+
+        <!-- Form Section -->
+        
+        
+          <div class="richTextContent">
+
+   <p ><strong> Payment Methods  </strong></p>   
+<apex:outputField value="{!agreement.Agreement_Parent__r.Payment_Methods__c }" />
+
+</div>
+
+
+        <apex:outputPanel rendered="{!agreement.Type__c == 'New Member'}">
+            <h4>Member Information</h4>
+        
+        <p>
+            <apex:outputField value="{!agreement.Agreement_Parent__r.Member_Info_Section__c}" />
+        </p>
+        </apex:outputPanel>
+
+  
+        <!-- Include any forms or additional details you need -->
+
+        <!-- Print Button -->
+        <button onclick="window.print();">Print Agreement</button>
+    </body>
+</apex:page>
