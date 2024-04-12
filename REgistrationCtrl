@@ -1,0 +1,290 @@
+public class RegistrationCtrl {
+    public String contactUserId {get;set;}
+    public String EventId {get;set;}
+    public Contact con {get;set;}
+    public BCAP_Event__c bcaEvent {get;set;}
+    public String vaccination_status {get;set;}
+    public Boolean vaccine_needed {get;set;}
+    public String fileName {get;set;}
+    public Blob file {get;set;}
+    public Boolean hasExistingFile {get;set;}
+    public Boolean exempt {get;set;}
+    //public List<EventQuestins_wraper> EventSA_List{get;set;}   
+    public List<questionWrapperCls> evntquesList {get;set;}
+    public questionWrapperCls quesWrap;
+    public string eveReg_Obj{get;set;}
+    public String memberBlockId{get;set;}
+    public String junctionRecordId { get; set; }
+    
+    public String profilePhotoId{get;set;}
+    
+    public String updateToUser{get;set;}
+
+    public list<SelectOption> vaccination_values {get;set;}
+    
+    public class questionWrapperCls {
+        public Event_Specific_Question__c que {get;set;}
+        public String ans {get;set;}
+        
+        public String record_Type{get;set;}
+        public String picklist_radiobutton_value{get;set;}
+        public list<String> checkbox_value{get;set;}
+        public list<SelectOption> radiobutton_checkbox_list{get;set;}
+        public list<SelectOption> picklist_values {get;set;}
+        
+        
+        public questionWrapperCls(String Options,String RecordTypeName){
+            record_Type = RecordTypeName;
+            que = new Event_Specific_Question__c();
+            ans = '';
+            picklist_radiobutton_value = '';
+            checkbox_value = new list<String>();
+            picklist_values = new list<SelectOption>{new SelectOption('','')};
+            radiobutton_checkbox_list = new list<SelectOption>();
+            if(Options!=null && RecordTypeName!=null && RecordTypeName!='Text'){
+                    for(String temp:Options.split(';')){
+                      picklist_values.add(new SelectOption(temp,temp)); 
+                        radiobutton_checkbox_list.add(new SelectOption(temp,temp));
+                    }
+            }
+        }
+    }
+    /*
+    public class EventQuestins_wraper{
+        public Event_Specific_Question__c esq_Obj{get;set;}
+        public Event_Specific_Answer__c esa_Obj{get;set;}
+    }*/
+    
+         
+    
+    public RegistrationCtrl(){
+        exempt = false;
+        vaccine_needed = false;
+        hasExistingFile = false;
+        vaccination_values = new list<SelectOption>();
+        Schema.DescribeFieldResult objFieldDescribe = Contact.Vaccination_Status__c.getDescribe();
+        List<Schema.PicklistEntry> lstPickListValues = objFieldDescribe.getPickListValues();
+        vaccination_values.add(new SelectOption('', ''));
+        for (Schema.PicklistEntry objPickList : lstPickListValues) {
+            vaccination_values.add(new SelectOption(objPickList.getValue(), objPickList.getLabel()));
+        }
+        updateToUser=null;
+        con = new Contact();
+        bcaEvent = new BCAP_Event__c();
+        contactUserId = ApexPages.CurrentPage().getParameters().get('UserId');
+        EventId = ApexPages.CurrentPage().getParameters().get('EventId');
+        //EventSA_List= new List<EventQuestins_wraper>(); 
+        evntquesList = new List<questionWrapperCls>();
+        memberBlockId=null;
+        con = [select id, name ,FirstName, Email, LastName, Title, Account.Name,Phone,AccountId,Vaccine_Verification_URL__c, PhotoUrl, Vaccination_Status__c  from contact where id =: contactUserId];
+        if(con.Vaccine_Verification_URL__c != null && con.Vaccine_Verification_URL__c != '') {
+            hasExistingFile = true;
+        }
+        vaccination_status = con.Vaccination_Status__c;
+
+        
+        bcaEvent = [select id,Name,Event_Date__c,Vaccination_Required__c,(select id,Name, Question__c,Question_Sort_Order__c from Event_Specific_Questions__r ORDER BY Question_Sort_Order__c ASC NULLS LAST),
+                           Event_Description__c,Event_Type__r.name,Host_Account__c,Parking__c,Start_date_Time__c,End_Date_Time__c,Add_Event_Official_Link_Long__c, Add_Event_Official_Link_Short__c, Add_Placeholder_Event_ID__c,    
+                           Publish_to_Portal__c,Start_Time__c,Venue__c,Venue_Address__c,End_Time__c,Directions__c,Attendance_Criteria__c 
+                                                  from BCAP_Event__c where id =: EventId ];
+         bcaEvent.Start_date_Time__c=bcaevent.Start_date_Time__c!=null?(bcaevent.Start_date_Time__c.addhours(0)):null   ;
+        bcaEvent.End_Date_Time__c=bcaevent.End_Date_Time__c!=null?(bcaevent.End_Date_Time__c.addhours(0)):null   ;
+        
+        
+            /*for(Event_Specific_Question__c Obj:bcaEvent.Event_Specific_Questions__r){
+                EventQuestins_wraper temp= new EventQuestins_wraper();
+                temp.esq_Obj=Obj;
+                temp.esa_Obj=new Event_Specific_Answer__c(Event_Specific_Question__c=Obj.id);
+                EventSA_List.add(temp);
+            }*/
+             for (Event_Specific_Question__c q : [select BCAP_Event__c,Question__c,Options__c,RecordType.Name from Event_Specific_Question__c where BCAP_Event__c =: bcaEvent.id Order By Question_Sort_Order__c ASC]) {
+                quesWrap =  new questionWrapperCls(q.Options__c,q.RecordType.Name);
+                quesWrap.que = q;
+                evntquesList.add(quesWrap);
+                System.debug(q);
+            }
+
+		 try {
+            // Query for the junction records
+           junctionRecordId = [SELECT Id FROM Memberblock_Event_junction__c  WHERE BCA_Event__c = :EventId AND Memberblock__c = :memberBlockId limit 1].id;
+                } catch (Exception e) {
+                    System.debug('Error querying junction records: ' + e.getMessage());
+                }
+        
+       
+            try{
+                profilePhotoId='/servlet/servlet.FileDownload?file='+[SELECT id,Name,Parentid from attachment WHERE parentid=:contactUserId and Name LIKE '%headshot.jpg' limit 1 ].id; 
+            }catch(Exception e){
+                profilePhotoId=null;
+            }
+        
+        try{
+            memberBlockId=[select id from Member_Block__c where Account__c=:con.accountId and Event_Type__c=:bcaEvent.Event_Type__c limit 1].id;
+        }catch(Exception e){
+            memberBlockId=null;
+            System.debug(e.getLineNumber()+' '+e.getMessage());
+        }
+    }
+    
+    
+    public pagereference confirm(){
+        /*if(vaccination_status == null || vaccination_status == '') {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.severity.ERROR, 'Vaccination Status is required.'));
+            return null;
+        }
+        else if(vaccination_status == 'I am fully vaccinated' && file == null && !hasExistingFile) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.severity.ERROR, 'Photo confirmation of Vaccination Status is required.'));
+            return null;
+        }
+        if(vaccination_status != con.Vaccination_Status__c) {
+            con.Vaccination_Status__c = vaccination_status;
+            if(vaccination_status != 'I am fully vaccinated') {
+                con.Vaccine_Verification_URL__c = null;
+            }
+            update con;
+        }
+        if(vaccination_status == 'I am fully vaccinated') {
+            if(file != null) {
+                ContentVersion cv = new ContentVersion(FirstPublishLocationId = con.Id, PathOnClient=fileName, Title='Vaccination Photo', VersionData=file, Vaccination_Photo__c = true);
+                insert cv;
+                ContentDistribution cd = new ContentDistribution(Name = 'Vaccination Photo', ContentVersionId = cv.Id, PreferencesAllowViewInBrowser= true);
+                insert cd;
+                cd = [Select Id, ContentDownloadUrl from ContentDistribution where Id = :cd.Id];
+                con.Vaccine_Verification_URL__c = cd.ContentDownloadUrl;
+                update con;
+            }
+            eveReg_Obj.Status__c = 'Confirmed';
+            updateToUser='Confirmed';
+            eveReg_Obj.Comments__c = comments;
+        }*/
+
+        if(bcaEvent.Vaccination_Required__c && (vaccination_status == null || vaccination_status == '')) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.severity.ERROR, 'Vaccination Status is required.'));
+            return null;
+        }
+        else if(bcaEvent.Vaccination_Required__c && vaccination_status == 'I am fully vaccinated' && file == null && !hasExistingFile) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.severity.ERROR, 'Photo confirmation of Vaccination Status is required.'));
+            return null;
+        }
+        else if(bcaEvent.Vaccination_Required__c && (vaccination_status != 'I am fully vaccinated')) {
+            if(vaccination_status == 'I’m exempt or have verified non-vaccination approval') {
+                exempt = true;
+                List<Messaging.SingleEmailMessage> mails = new List<Messaging.SingleEmailMessage>();
+                Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+                List<String> sendTo = new List<String>();
+                sendTo.add('events@bcaphiladelphia.com');
+                mail.setToAddresses(sendTo);
+
+                mail.setReplyTo('events@bcaphiladelphia.com');
+                mail.setSenderDisplayName('BCA Philadelphia Event');
+
+                mail.setSubject('BCA Philadelphia Event - RSVP - Vaccination Exempt');
+                String body = 'Hi BCA Philadelphia Event Team<br/>';
+                body +='';
+                body +='<br/>First name: '+con.firstName;//Katie;
+                body +='<br/>Last Name: '+con.lastName;//Kavanaugh;
+                body +='<br/>Email: '+con.Email+'<br/>Salesforce ID: '+con.id;
+                body +='<br/>Title: '+con.Title;
+                body +='<br/>Phone: '+con.phone;
+                body += '<br/>Event: ' + bcaEvent.Name;
+                body += '<br/>Event Id: ' + bcaEvent.Id;
+                body += '<br/>Member is requesting a registration with vaccine exemption. ';
+                mail.setHtmlBody(body);
+    
+                mails.add(mail);
+                Messaging.sendEmail(mails);
+            }
+            else {
+                decline();
+                
+            }
+            con.Vaccination_Status__c = vaccination_status;
+            updateToUser = null;
+            vaccine_needed = true;
+            update con;
+            return null;
+        }
+        System.debug('Confirm');
+        try{
+        updateToUser='Confirmed';
+        Event_Registration__c eveReg_Obj;
+        try{
+            System.debug('----');
+            Id tempId=[select id,Event__c,Contact__c from Event_Registration__c where event__C=:EventId and Contact__c=:con.id  limit 1].id;
+            eveReg_Obj = new Event_Registration__c(id=tempId,Event__c=EventId,Contact__c=con.id,Member_Block__c=memberBlockId,Status__c='Confirmed', Memberblock_Event_junction__c= junctionRecordId);
+            eveReg_Obj.Registration_Type__c=[select id,Account_Type__c from contact where id=:con.id limit 1].Account_Type__c=='Member'?'Member':'Guest';
+        }catch(Exception e){
+            eveReg_Obj = new Event_Registration__c(Event__c=EventId,Contact__c=con.id,Status__c='Confirmed',Member_Block__c=memberBlockId, Memberblock_Event_junction__c= junctionRecordId);
+            eveReg_Obj.Registration_Type__c=[select id,Account_Type__c from contact where id=:con.id limit 1].Account_Type__c=='Member'?'Member':'Guest';
+        }
+        upsert eveReg_Obj;
+        if(bcaEvent.Vaccination_Required__c) {
+            con.Vaccination_Status__c = vaccination_status;
+            update con;
+            if(file != null) {
+                ContentVersion cv = new ContentVersion(FirstPublishLocationId = con.Id, PathOnClient=fileName, Title='Vaccination Photo', VersionData=file, Vaccination_Photo__c = true);
+                insert cv;
+                ContentDistribution cd = new ContentDistribution(Name = 'Vaccination Photo', ContentVersionId = cv.Id, PreferencesAllowViewInBrowser= true);
+                insert cd;
+                cd = [Select Id, ContentDownloadUrl from ContentDistribution where Id = :cd.Id];
+                con.Vaccine_Verification_URL__c = cd.ContentDownloadUrl;
+                update con;
+                file = null;
+            }
+        }
+        //List<Event_Specific_Answer__c> esa_list =new list<Event_Specific_Answer__c>();   
+        /*for(EventQuestins_wraper Obj:EventSA_List){
+            Obj.esa_Obj.Event_Registration__c=eveReg_Obj.id;
+            if(Obj.esa_Obj.Answer__c!=null)
+                esa_list.add(Obj.esa_Obj);
+        }
+        if(esa_list.size()>0)
+            insert esa_list;
+            */
+            
+        List<Event_Specific_Answer__c> ansList = new List<Event_Specific_Answer__c>();
+        for(questionWrapperCls qwrap : evntquesList) {
+            if(qwrap.record_Type!=null && qwrap.record_Type!='Text'){
+                if(qwrap.record_Type=='Picklist'&& qwrap.picklist_radiobutton_value!=null&&qwrap.picklist_radiobutton_value!=''){
+                    qwrap.ans=qwrap.picklist_radiobutton_value;
+                }else if(qwrap.record_Type=='RadioButtons'&& qwrap.picklist_radiobutton_value!=null&&qwrap.picklist_radiobutton_value!=''){
+                    qwrap.ans=qwrap.picklist_radiobutton_value;
+                }else if(qwrap.record_Type=='Checkboxes'&&qwrap.checkbox_value.size()!=0){
+                    qwrap.ans=String.join(qwrap.checkbox_value,';');
+                }
+            }
+            if(qwrap.ans != '')
+                ansList.add(new Event_Specific_Answer__c(Answer__c = qwrap.ans,Event_Registration__c = eveReg_Obj.id,Event_Specific_Question__c = qwrap.que.id));
+        }
+        if(ansList.size() > 0)
+            insert ansList;
+        }catch(Exception e){ApexPages.addMessage(new ApexPages.Message(ApexPages.severity.ERROR, e.getMessage()));}
+       return null;
+    }
+    
+    public pagereference decline(){
+        updateToUser='Declined';
+        Event_Registration__c eveReg_Obj;
+            try{
+                Id tempId=[select id,Event__c,Contact__c from Event_Registration__c where event__C=:EventId and Contact__c=:con.id  limit 1].id;
+                eveReg_Obj = new Event_Registration__c(id=tempid,Event__c=EventId,Contact__c=con.id,Status__c='Declined',Member_Block__c=memberBlockId, Memberblock_Event_junction__c= junctionRecordId);
+            }catch(Exception e){
+                eveReg_Obj = new Event_Registration__c(Event__c=EventId,Contact__c=con.id,Status__c='Declined',Member_Block__c=memberBlockId, Memberblock_Event_junction__c= junctionRecordId);
+            }
+            upsert eveReg_Obj;
+        return null;
+    }
+    
+
+
+  public PageReference cancel() {
+      return new PageReference('/EventDetails?EventId=' + EventId + '&UserId=' + con.id);
+      }
+      
+  
+  
+
+    public PageReference vacFile() {
+        return null;
+    }
+}
