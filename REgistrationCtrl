@@ -1,3 +1,5 @@
+draft with adding MBJ, was not tested
+
 public class RegistrationCtrl {
     public String contactUserId {get;set;}
     public String EventId {get;set;}
