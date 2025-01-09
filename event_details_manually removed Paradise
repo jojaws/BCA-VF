@@ -1,0 +1,1579 @@
+<apex:page controller="EventDetaisController" sidebar="false" showHeader="false" standardStylesheets="false" cache="false" id="pg">
+      <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+       <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
+<link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" ></script>
+<link rel="stylesheet" type="text/css" href="https://cloud.typography.com/6192052/7260552/css/fonts.css" />
+<style>
+            
+           
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    background-color: background-color: #fff;
+}
+
+.navbar-header {
+    background-color: #fff;
+}
+
+
+.modal {
+    text-align: center;
+    padding: 0!important;
+}
+
+.modal:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    margin-right: -4px;
+}
+
+.modal-dialog {
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.row-height {
+    display: table;
+    table-layout: fixed;
+    height: 100px;
+    width: 100%;
+}
+.desk { display:none;}
+.mobile{display:block}
+.tdWidth{width:16.66666667%}
+@media screen and (min-width: 480px) {
+    .desk{display:block;}
+    .mobile{display:none;}
+}
+
+
+table {
+    font-size:14px;
+    color:#333333;
+    padding: 8px;
+}
+
+            
+.back-to-top {
+    cursor: pointer;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display:none;
+}
+
+            
+            /* Extra small devices (phones, less than 768px) */
+/* No media query since this is the default in Bootstrap */
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: @screen-sm-min) { ... }
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: @screen-md-min) { ... }
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: @screen-lg-min) { ... }
+               
+               table {
+    font-size:14px;
+    color:#333333;
+    padding: 8px;
+}
+
+
+
+
+.col-lg-12 {
+    background-color: #0087aa;
+}
+
+.col-md-8 {
+    font-family: Gotham Narrow Book, Gotham Narrow SSm B, Helvetica Neue, Helvetica, Roboto, Arial,sans-serif;
+}
+   
+
+
+   
+
+
+/* ******************************* */
+/* Styles Below Added by Synergema */
+/* ******************************* */
+html {
+    box-sizing: border-box
+}
+
+*,*::after,*::before {
+    box-sizing: inherit
+}
+
+.body {
+    font-feature-settings: "liga", "kern", "pnum", "case";
+    color: #252525;
+       font-family: Open Sans,Gotham Narrow Book, Gotham Narrow SSm B, Helvetica Neue, Helvetica, Roboto, Arial,sans-serif !important
+}
+
+a {
+    color: #0087AA;
+    transition: all 0.2s ease-in-out;
+}
+
+a:hover {
+    color: #015C79;
+}
+
+.container {
+    margin: 0 auto;
+    max-width: 1024px;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+}
+
+.navbar {
+    border: 0;
+    margin: 0 auto 30px auto;
+    padding: 15px 0;
+    position: relative
+}
+
+.navbar .logo {
+    display: inline-block
+}
+
+.navbar .logo>img {
+    height: 2.679em
+}
+
+.menu-toggle {
+    position: static;
+}
+
+.menu-burger {
+    background: transparent;
+    border: 0;
+    position: absolute;
+    top: 50%;
+    right: 1.125em;
+    cursor: pointer;
+    height: 22px;
+    margin-top: -11px;
+    padding: 0;
+    transition: opacity 0.5s ease-in-out;
+    width: 37px;
+    z-index: 998
+}
+
+.menu-burger:hover {
+    height: 41px
+}
+
+.menu-burger:hover .bar.-one {
+    transform: translateY(-2px)
+}
+
+.menu-burger:hover .bar.-three {
+    transform: translateY(20px)
+}
+
+.menu-burger .bar {
+    background: #09091A;
+    display: block;
+    height: 3px;
+    position: absolute;
+    transition: all 0.5s ease-in-out;
+    width: 100%
+}
+
+.menu-burger .bar.-two {
+    transform: translateY(9px)
+}
+
+.menu-burger .bar.-three {
+    transform: translateY(18px)
+}
+
+.menu-popover {
+    top: 70%;
+    right: 20px;
+}
+
+.container-fluid>.navbar-collapse,
+.container-fluid>.navbar-header,
+.container>.navbar-collapse,
+.container>.navbar-header {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.alert {
+    border: 0;
+    border-radius: 0;
+    color: #252525
+}
+
+.alert.alert-info {
+    backgorund-color: #BEDFE8;
+}
+
+.section-header {
+    font-size: 23px;
+    font-weight: 700;
+    line-height: 1.1;
+    font-family: Chronicle SSm A, Chronicle SSm B, Georgia, Cambria, Times New Roman, Times,serif;
+    font-weight: 400;
+    margin-bottom: 20px;
+}
+
+.button {
+    text-transform: uppercase;
+    letter-spacing: .258em;
+    font-size: 13px !important;
+    font-weight: 800;
+    padding: 10px 15px;
+    background-color: #ADADAD;
+    border: 0px solid;
+    border-radius: 0 !important;
+    display: inline-block;
+    letter-spacing: normal;
+    line-height: 1.3;
+    min-height: 45px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out
+}
+
+.button:hover {
+    background-color: #09091A;
+    color: #fff;
+    text-decoration: none
+}
+
+.button.-action {
+    border: 2px solid;
+    padding-right: 60px;
+    position: relative;
+    text-align: left
+}
+
+.button.-action>.arrow {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    border-left: 2px solid;
+    height: 100%;
+    transition: all 0.2s ease-in-out;
+    width: 44px
+}
+
+.button.-action>.arrow>.icon {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 14px;
+    margin: 0 auto;
+    transform: translateY(-50%);
+    transition: all 0.2s ease-in-out;
+    width: 16px
+}
+
+.button.-action:hover>.arrow {
+    border-color: transparent
+}
+
+.button.-primary {
+    background-color: #0087AA;
+    border-color: #0087AA;
+    color: #fff
+}
+
+.button.-primary>.arrow {
+    background-color: #0087AA;
+    border-color: #015C79
+}
+
+.button.-primary:hover {
+    background-color: #09091A;
+    color: #09091A
+}
+
+.button.-secondary {
+    background-color: #0087aa;
+    border-color: #0087aa;
+    color: #ADADAD
+}
+
+.button.-secondary>.arrow {
+    background-color: #09091A;
+    border-color: #ADADAD
+}
+
+.button.-secondary>.arrow>.icon {
+    fill: #ADADAD
+}
+
+.button.-secondary:hover {
+    background-color: #09091A;
+    border-color: #09091A !important;
+    color: #fff
+}
+
+.button.-secondary:hover>.arrow>.icon {
+    fill: #fff
+}
+
+.button.-full {
+    max-width: none;
+    width: 100%
+}
+
+.button.-nav {
+    background-color: #fff;
+    border-color: #fff;
+    color: #0087AA
+}
+
+.button.-nav:hover {
+    background-color: #0087AA;
+    color: #fff
+}
+
+.button.-label {
+      background-color: #0087aa;
+    color: #fff
+}
+.button.-label:hover {
+    background-color: #09091A;
+    color: #fff
+}
+
+.button.-block {
+    background-color: #fff;
+    border: 1px solid;
+    border-color: #0087AA;
+    color: #09091A;
+    padding: 10px 10px;
+    line-height: 1;
+    min-height: 35px;
+    
+}
+    
+.button.-block:hover {
+    background-color: #fff;
+    border-color: #0087AA;
+    color: #09091A
+}
+
+
+    
+
+.section {
+    padding-bottom: 75px;
+    padding-top: 75px
+}
+
+.section-alt {
+    background-color: #f1f1f1;
+}
+
+.footer-main {
+    padding: 4.167em 0;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    color: #fff;
+    background: #09091A;
+    font-size: 0.714em
+}
+
+h1,h2,h3 {
+    margin-top: 0
+}
+
+form {
+    width: 100%
+}
+
+[type='color'],[type='date'],[type='datetime'],[type='datetime-local'],[type='email'],[type='month'],[type='number'],[type='password'],[type='search'],[type='tel'],[type='text'],[type='time'],[type='url'],[type='week'],input:not([type]),textarea,textarea {
+    width: 100%
+}
+
+@media screen and (max-width: 767px) {
+    [type='color'],[type='date'],[type='datetime'],[type='datetime-local'],[type='email'],[type='month'],[type='number'],[type='password'],[type='search'],[type='tel'],[type='text'],[type='time'],[type='url'],[type='week'],input:not([type]),textarea,textarea {
+        font-size: 16px
+    }
+}
+
+select {
+    width: 100%
+}
+
+label {
+    display: block
+}
+
+.form .row::after {
+    clear: both;
+    content: "";
+    display: block
+}
+
+.form .group {
+    margin-bottom: 15px;
+    position: relative
+}
+
+@media screen and (min-width: 480px) {
+    .form .group.-split {
+        float:left;
+        display: block;
+        margin-right: 1.75422%;
+        width: 49.12289%
+    }
+
+    .form .group.-split:last-child {
+        margin-right: 0
+    }
+
+    .form .group.-split:nth-child(2n) {
+        margin-right: 0
+    }
+
+    .form .group.-split:nth-child(2n+1) {
+        clear: left
+    }
+
+    .form .group.-split:nth-child(odd) {
+        padding-right: 0.952em
+    }
+
+    .form .group.-split:nth-child(even) {
+        padding-left: 0.952em
+    }
+}
+
+.form .label {
+    text-transform: uppercase;
+    letter-spacing: 1.84726px;
+    color: #09091A;
+    display: block;
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 1.6;
+    padding-top: 0;
+    text-align: left;
+    white-space: normal
+}
+
+.form .input.-text {
+    padding: 10px;
+    background: transparent;
+    border-radius: 0 !important;
+    border: 2px solid #09091A !important;
+    font-size: 16.8px;
+    height: auto !important
+}
+
+.form .input.-select {
+    padding: 10px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: transparent url(/assets/img/icon-select-arrow.svg) right center no-repeat;
+    border: 2px solid #09091A;
+    border-radius: 0;
+    position: relative;
+    width: 100%
+}
+
+.form.-login {
+    padding: 40px;
+    background-color: rgba(255,255,255,0.75);
+    color: #09091A;
+    margin: 0 auto;
+    max-width: 380px;
+    text-align: left
+}
+
+.form.-login .input.-text {
+    border-color: #09091A
+}
+
+.form .actions {
+    margin-bottom: .893em
+}
+
+.panel {
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    margin: 0 auto;
+    max-width: 74em
+}
+
+.text.-p-xsm {
+    font-size: 12.6px;
+    line-height: 1.3
+}
+
+/* ******************************* */
+/* Styles Above Added by Synergema */
+/* ******************************* */
+
+
+
+/* About (Event tools section)
+============================================== */
+.about {
+   background: url("https://c.na30.visual.force.com/resource/1475519123000/Background_light") no-repeat bottom center;
+  background-size: cover;
+  background-color: rgba(255, 255, 255, 0.2);
+  text-align: left;
+  padding: 0px 0;
+  font-family: Gotham Narrow Book, Gotham Narrow SSm B, Helvetica Neue, Helvetica, Roboto, Arial,sans-serif;
+  min-height:100%;
+  border-top:0px solid #ddd;
+  border-bottom:1px solid #ddd;
+  -webkit-background-size: cover;
+-moz-background-size: cover;
+-o-background-size: cover;
+background-size: cover;
+
+}
+
+.about .fig-profile {
+  max-width: 100px;
+  max-height: 100px;
+  margin: 0 auto 0;
+  position: relative;
+  overflow: hidden !important;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  margin-bottom: 25px;
+}
+.about .fig-profile:hover figcaption {
+  opacity: 1;
+  webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+  background-color: #1fa7bf;
+}
+.about .fig-profile figcaption {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  border-radius: 50%;
+  text-align: center;
+  vertical-align: center;
+  line-height: 100px;
+  opacity: 0;
+  font-family:  PT Serif;
+  height: 100%;
+  webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+  color: #fff;
+  font-size: 14px;
+}
+.about .name {
+  font-size: 30px;
+  font-family:  PT Serif;
+  margin: 10px 0 0 0;
+}
+
+.about .caption{
+    font-size:14px;
+    line-height: 10px
+ }
+    
+.about .position {
+  margin: 0;
+}
+
+.about .location {
+  margin: 0px 0 0px 0;
+}
+
+
+
+.about .slogan {
+  font-family:  PT Serif;
+  margin-bottom: 10px;
+  margin-top: 10px;
+ 
+}
+.about p {
+  font-size: 14px;
+   font-family: Gotham Narrow Book, Gotham Narrow SSm B, Helvetica Neue, Helvetica, Roboto, Arial,sans-serif;
+}
+
+.about h1 {
+  font-size: 18px;
+    font-family: Gotham Narrow Bold, Gotham Narrow SSm B, Helvetica Neue, Helvetica, Roboto, Arial,sans-serif;
+  font-weight: 100;
+}
+
+
+.about h2 {
+  font-size: 16px;
+  color: #0087aa;
+    font-family: Gotham Narrow Bold, Gotham Narrow SSm B, Helvetica Neue, Helvetica, Roboto, Arial,sans-serif;
+  font-weight: 400;
+}
+
+.about h3 {
+  font-size: 18px;
+   font-family: Chronicle SSm A, Chronicle SSm B, Georgia,Cambria,Times New Roman, Times,serif;
+}
+.col-sm-4 {
+    background-color: #252525;
+    height:500px;
+    width:275px;
+   font-family: Open Sans,Gotham Narrow Book, Gotham Narrow SSm B, Helvetica Neue, Helvetica, Roboto, Arial,sans-serif;
+    font-size: 13px;
+   
+}
+
+
+/*--------------------------------------------------------------
+# Top Bar
+--------------------------------------------------------------*/
+#topbar {
+  background: #39312f;
+  font-size: 14px;
+  padding: 0;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+#topbar .contact-info ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+#topbar .contact-info li {
+  display: inline-block;
+  padding: 8px 0;
+}
+
+#topbar .contact-info li + li {
+  margin-left: 18px;
+}
+
+#topbar .contact-info a {
+  color: rgba(255, 255, 255, 0.8);
+  transition: 0.3s;
+}
+
+#topbar .contact-info a:hover {
+  color: #fff;
+}
+
+#topbar .contact-info i {
+  color: #0087aa;
+  padding-right: 4px;
+}
+
+#topbar .cta a {
+  color: #fff;
+  background: #0087aa;
+  padding: 8px 20px;
+  display: inline-block;
+  transition: 0.3s;
+}
+
+#topbar .cta a:hover {
+  background: #999999;
+}
+
+
+
+
+/* ******************************* */
+/* Event Style  */
+/* ******************************* */
+
+
+.event {
+  background-color: rgba(255, 255, 255, 0.2);
+  text-align: left;
+  padding: 50px 0;
+  font-family: Gotham Narrow Book, Gotham Narrow SSm B, Helvetica Neue, Helvetica, Roboto, Arial,sans-serif;
+  min-height:100%;
+  -webkit-background-size: cover;
+-moz-background-size: cover;
+-o-background-size: cover;
+background-size: cover;
+z-index: 3;
+}
+
+
+
+.event .position {
+  margin: 0;
+  z-index: 3;
+}
+
+.event .location {
+  margin: 0px 0 0px 0;
+  z-index: 3;
+}
+
+
+ 
+}
+.event p {
+  font-size: 14px;
+   font-family: Gotham Narrow Book, Gotham Narrow SSm B, Helvetica Neue, Helvetica, Roboto, Arial,sans-serif;
+}
+
+.event h1 {
+  font-size: 22px;
+    font-family:PT Serif, Chronicle SSm A,  Chronicle SSm B, Georgia,Cambria,Times New Roman, Times,serif;
+  font-weight: 100;
+}
+
+
+.event h2 {
+  font-size: 14px;
+  text-align: center;
+  color: #0087aa;
+  font-family: Open Sans,Gotham Narrow Bold, Gotham Narrow SSm B, Helvetica Neue, Helvetica, Roboto, Arial,sans-serif;
+  font-weight: 300;
+  padding-top: 25px;
+}
+
+.event h3 {
+  font-size: 18px;
+   font-family: Chronicle SSm A, Chronicle SSm B, Georgia,Cambria,Times New Roman, Times,serif;
+}
+
+
+
+/* ******************************* */
+/* Event Style  ABOVE */
+/* ******************************* */
+
+
+ .bottom-align-text {
+    bottom: 0;
+    right: 0;
+  }
+
+
+/*--------------------------------------------------------------
+# Tag
+--------------------------------------------------------------*/
+.tag {
+  padding: 0px 0 0px 0;
+  position: relative;
+  z-index: 1;
+}
+
+.tag .content {
+  padding: 0px;
+  border-radius: 0px;
+  background: rgba(255, 255, 255, 255);
+  color: #000000;
+    box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
+
+  
+
+}
+
+.tag .content h3 {
+  font-weight: 200;
+  font-size: 18px;
+  margin-bottom: 0px;
+}
+
+.tag .content p {
+  margin-bottom: 0px;
+}
+
+
+/* ******************************* */
+/* Alert Bar Styles  */
+/* ******************************* */
+
+
+.alert-info {
+   width:100%;   
+    
+}
+
+.alert-warning {
+   width:100%;   
+   background-color: #B3B6B7;
+   color: #252525;
+   padding: 8px;
+   font-size:13px;
+   font-family: Gotham Narrow Book, Gotham Narrow SSm B, Helvetica Neue, Helvetica, Roboto, Arial,sans-serif;
+    
+}
+
+.alert-success {
+   width:100%;   
+   background-color: #efefef;
+   color: #252525;
+   padding: 20px;
+    
+}
+
+
+/* ******************************* */
+/* Alert Bar Styles ABOVE  */
+/* ******************************* */
+
+  .img-responsive {
+        width: 100%;
+        height: auto;
+    }
+
+
+
+        </style>
+        <!-- End -->
+       <link rel="stylesheet" type="text/css" href="{!$Resource.Skin}" />
+
+<head>
+
+<script>
+    var script = document.createElement('script');
+    script.src = "https://widgets.givebutter.com/latest.umd.cjs?acct=YvpJV4F39JKD5WzZ&p=other";
+    script.async = true;
+    document.head.appendChild(script);
+</script>
+
+
+<!-- Google tag  -->
+  <script src="https://www.googletagmanager.com/gtag/js?id=G-HMMSCCX5V1"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-HMMSCCX5V1');
+      </script>
+
+</head>
+
+    <body>
+    
+     <c:Nav_Bar />
+
+ 
+    
+
+
+    
+    <!-- REG status Row
+    
+    <div class="alert alert-info" style="display:{!IF(hideDeadLineANDMemberBlock && (bcaEvent.Event_Type__r.Name !='Open'),'','None')}">
+
+     <center> <span class="glyphicon icon-info"></span> {!EvntStatus} </center>
+  </div>
+
+ END REG status Row -->
+
+    <!-- Full-Width Image 
+    
+    
+   <apex:outputPanel rendered="{!EventId == 'a00Ri00000QjrCaIAJ'}">
+  <div style="width: 100%; text-align: center; margin: 0px 0;">
+   <img src="
+https://s3.amazonaws.com/bcaphiladelphia.com/wp-content/uploads/2024/12/10122852/Header-ALLSTAR-SS.png   " alt="Visual Interest Image" 
+         style="width: 100%; height: auto; max-height: 300px;"/> 
+  </div>
+</apex:outputPanel> 
+
+-->
+
+      
+         
+
+         
+  <!-- END Full-Width Image -->
+ 
+ 
+ 
+                <script>
+                    function home(){window.open('/contactprofile?UserId={!con.id}',"_self");}
+                </script>  
+                
+                
+
+ 
+                <!-- STATUS CONTAINER -->
+                <div class="row" style="background-color:#0087aa; font-size: 16px;padding:10px; color:#eeeeee">
+<div class="col-sm-3"></div>
+<div class="col-sm-3">{!EvntStatus} </div>
+<div class="col-sm-3"></div>
+<div class="col-sm-3"> </div>
+  </div>
+
+
+                <!-- END STATUS CONTAINER -->
+                
+                <!-- ======= TAG  ======= -->
+        
+
+
+
+ <section style="padding-top:50px; " id="event" class="d-flex flex-column justify-content-center align-items-center">
+    <div class="container" data-aos="fade-in">
+
+
+
+     <div class="row">
+        <div class="event">
+          
+          <!-- Left section-->
+
+                     <div class="col-md-8" style="padding-left:5px; padding-right:20px;">
+                          <!--  <center>-->  
+                              <h1><b>{!bcaEvent.name}</b> <small>  <br/>  <br/>  {!bcaEvent.Tag_Line__c}</small></h1>
+                          <!--  </center>
+                            <center>   
+                           <!--  <img class="img-responsive" src="https://bcaproud.com/wp-content/themes/baseline2120/assets/images/divider.svg" alt="Logo" style="max-width:125px; max-height:75px; padding:5px"/> 
+                           
+                            </center>-->
+                            <hr style="height:1px; width:15%;text-align:left;margin-left:0; border-width:0;color:gray;background-color:gray;"> </hr>
+
+                             
+                         <p> <apex:outputText value="{!bcaEvent.Event_Description__c}" escape="false"></apex:outputText></p>
+                         
+  <!--  <apex:image url="{!bcaEvent.Event_Image__c}" width="200" height="200" rendered="{!NOT(ISBLANK(bcaEvent.Event_Image__c))}"/> -->
+
+                              
+                     </div>
+          <!-- END Left section-->    
+          
+          <!-- Right section--> 
+                  
+
+          
+                      <div class="col-md-4">
+                      <div style="display:{!if(bcaEvent.Event_Type__r.Name =='Member Guest','','None')}">  
+                                 <center>    <img class="img-responsive" src="{!$Resource.memberguestFT_logo}" alt="Event Image" style="max-width:305px; max-height:305px; padding:15px"/> </center>
+                        
+                     </div> 
+                          
+                          <h2> DATE AND TIME</h2>
+                              <center> <apex:outputText value="{0,date,EEEE',' MMMM d',' yyyy}"> 
+                              <apex:param value="{!bcaEvent.Event_Date__c}" /> 
+                              </apex:outputText> </center>
+                              <center> <apex:outputText style="font-size:14px" value="{!bcaEvent.Start_Time__c} - {!bcaEvent.End_Time__c}"/> </center>
+                          <h2> LOCATION</h2>
+                              <center> <apex:outputText style="font-size:14px" value="{!bcaEvent.Venue__c}"/> </center>
+                             <a href="{!bcaEvent.Google_Maps_Link__c}"> <center> <apex:outputText style="font-size:14px" value="{!bcaEvent.Venue_Address__c}"/> </center></a>
+
+                               
+                               <center>  
+   
+   
+                 <div style="display:{!if(ISBLANK(bcaEvent.Virtual_URL__c),'None','')}">
+                           <center>   <a href="{!bcaEvent.Virtual_URL__c}"> Click Here for Virtual Link  </a></center>
+                 </div>
+                 
+<!--    <img class="img-responsive" src="{!bcaEvent.Event_Image__c}" alt="Event Image" style="max-width:305px; max-height:305px; padding:15px"/>  -->
+
+                        <img class="img-responsive" src="{!bcaEvent.Event_Host_Logo__c}" alt="Host Logo" style="max-width:205px; max-height:205px; padding:15px"/>
+ 
+                 <apex:outputPanel rendered="{!EventId == 'a00Hp00001D3n7iIAB'}">
+        <div style="text-align: center; margin-left: 50px;">
+            <!-- Render the Givebutter Widget -->
+            <givebutter-widget id="gm2eZp"></givebutter-widget>
+        </div>
+
+        <!-- Dynamically adding the script with async -->
+        <script>
+            var script = document.createElement('script');
+            script.src = "https://widgets.givebutter.com/latest.umd.cjs?acct=YvpJV4F39JKD5WzZ&p=other";
+            script.async = true;
+            document.head.appendChild(script);
+        </script>
+    </apex:outputPanel>
+</center>
+                                
+                 </div>
+                 
+                
+                 
+                 
+                   
+                 
+                
+          <!-- END Right section--> 
+          
+          </div>
+      </div>
+   </div>
+</section>
+
+<br/>
+<br/>
+
+<!-- END Title, Date, Time, Location CONTAINER-->
+
+
+
+                     
+
+    
+    
+    
+
+
+<!-- FULL DETAILS container Original, standard-->
+
+
+<!-- REG Deadline Row CONTAINER-->
+      <!--    <div class="alert-warning" style="font-size:16px;display:{!IF(Not(idDeadline) && (bcaEvent.Event_Type__r.Name !='Open'), '', 'None' )}"> -->
+      
+  <div class="alert-warning" style="font-size:16px;display:{!IF(Not(idDeadline) && (bcaEvent.Event_Type__r.Name != 'Open') , '', 'None')}">
+
+             <center> <span class="glyphicon icon-info"></span>     
+             <apex:outputText value="Registration Deadline:"></apex:outputText>
+             <apex:outputText value=" {0,date,EEEE',' MMMM d',' yyyy}">
+             <apex:param value="{!bcaEvent.Deadline__c}" />  </apex:outputText> </center>
+          </div>
+          
+          
+  
+
+<!-- END REG Deadline Row CONTAINER-->  
+
+
+<!--RSVP BUTTONS CONTAINER-->
+      
+          
+
+       <div class="alert-success" style="font-size:16px;">
+            <!--<div class="caption" style="display:{!if(att.id != null,'','None')}"> -->
+            <apex:form id="Form1" styleClass="form-horizontal">
+            <apex:actionFunction action="{!EventsHome}" name="EventsHome_sf" reRender="pg"/>
+            
+                 <center>  
+          
+
+
+      <!-- Not deadline, Not Max, Not Invite Only -->
+                        <div class="caption" style="display:{!if((Not(idDeadline)&&(Not(isMaxMember))&&(bcaEvent.Event_Type__r.Name !='Open')&&(Not(bcaEvent.Invite_Only__c))),'','None')}">
+
+                            <apex:commandButton value="{!RegBtnLabel}" styleClass="button -primary" title="RSVP" action="{!registration}">     </apex:commandButton>
+                            <apex:commandButton style="margin:5px;" value="Register Someone" styleClass="button -secondary" action="{!RegisterSomeOneElse}"/>
+                            <apex:commandButton value="Invite Someone" styleClass="button -secondary" action="{!invitesomeoneelse}"/>
+                        </div>
+                  
+                        
+      <!-- Not deadline, Not Max, Invite Only- Invited -->
+                        <div class="caption" style="display:{!if((Not(idDeadline)&&(Not(isMaxMember))&&(bcaEvent.Event_Type__r.Name !='Member Guest')&&(bcaEvent.Event_Type__r.Name !='Open')&&(bcaEvent.Invite_Only__c)&&(isAlreadyInvited)),'','None')}">
+                             <apex:commandButton value="{!RegBtnLabel}" styleClass="button -primary"  action="{!registration}" /> 
+                             <!-- <apex:commandButton style="margin:5px;" value="Register Someone" styleClass="button -secondary" action="{!RegisterSomeOneElse}"/> -->
+                             <!-- <apex:commandButton value="Invite Someone" styleClass="button -secondary" action="{!invitesomeoneelse}"/> -->
+                        </div>
+
+ <!-- Not deadline, Not Max, Invite Only- Declined -->
+                        <div class="caption" style="display:{!if((Not(idDeadline)&&(Not(isMaxMember))&&(bcaEvent.Event_Type__r.Name !='Member Guest')&&(bcaEvent.Event_Type__r.Name !='Open')&&(bcaEvent.Invite_Only__c)&&(EvntReg.Status__c == 'Declined')),'','None')}">
+                             <apex:commandButton value="{!RegBtnLabel}" styleClass="button -primary"  action="{!registration}" /> 
+                             <!-- <apex:commandButton style="margin:5px;" value="Register Someone" styleClass="button -secondary" action="{!RegisterSomeOneElse}"/> -->
+                             <!-- <apex:commandButton value="Invite Someone" styleClass="button -secondary" action="{!invitesomeoneelse}"/> -->
+                        </div>
+                        
+                        
+      <!-- Event Type= MEMBER GUEST, Not deadline, Not Max, Invite Only- INVITED OR CONFIRMED  -->
+                        <div class="caption" style="display:{!if((Not(idDeadline)&&(Not(isMaxMember))&&(bcaEvent.Event_Type__r.Name =='Member Guest')&&(bcaEvent.Invite_Only__c)&&(isAlreadyInvited)),'','None')}">
+                             <apex:commandButton value="{!RegBtnLabel}" styleClass="button -primary"  action="{!registration}" /> 
+                             <apex:commandButton style="margin:5px;" value="Register Your Guest" styleClass="button -secondary" action="{!RegisterSomeOneElse}"/> 
+                            <!--  <apex:commandButton value="Invite Someone" styleClass="button -secondary" action="{!invitesomeoneelse}"/>  -->
+                        </div>
+                 
+     <!-- Event Type= OPEN,  -->
+                        <div class="caption" style="display:{!if(((bcaEvent.Event_Type__r.Name =='Open')),'','None')}">
+                           <br></br> ** No Registration Necessary **
+
+                        </div>
+      <!-- Deadline, CONFIRMED -->                        
+                        <div class="caption" style="display:{!IF(idDeadline &&(EvntReg.Status__c == 'Confirmed'), '', 'None')}">
+                               <span class="alert" style="font-size:14px">
+                            Registration is closed. {!EvntStatus}</span><br></br>
+                            <apex:commandButton value="{!RegBtnLabel}" styleClass="button -primary" title="RSVP" action="{!registration}">     </apex:commandButton>
+                             
+
+                        </div>
+                                           
+      <!-- Deadline -->                        
+                        <div class="caption" style="display:{!IF(idDeadline &&(bcaEvent.Event_Type__r.Name !='Open') &&(EvntReg.Status__c != 'Confirmed'), '', 'None')}">
+                            <span class="alert" style="font-size:14px">
+                            Registration is closed. If you'd like to be added to the <b>Wait List </b> or if you have any questions, please contact BCA at <a href="mailto:events@bcaphiladelphia.com"> events@bcaphiladelphia.com</a></span>
+                        </div>
+                        
+      <!-- Not deadline, Is Max, -->       
+                        <div class="caption" style="display:{!if((Not(idDeadline)&&(isMaxMember)&&(bcaEvent.Event_Type__r.Name !='Open')),'','None')}" >
+                            <span class="alert" style="font-size:14px">
+                            <apex:outputText value="Max number of registrants in your Memberblock has been reached." />
+                            </span>
+                        </div>
+                        
+      <!-- Not deadline, Not Max, Invite Only- NOT Invited --> 
+                        <div class="caption" style="display:{!if((Not(idDeadline)&&(Not(isMaxMember))&&(bcaEvent.Invite_Only__c)&&(NOT(isAlreadyInvited))),'','None')}">
+                            <span class="alert" style="font-size:14px">
+                            <apex:outputText value="This event is by invitation only"/>
+                            </span>
+                        </div>
+                        
+      <!-- Not deadline, Not Max, Not Invite Only- Invited -->    
+                        <div class="caption"  style="padding-top:5px; display:{!if((Not(idDeadline)&&(Not(isMaxMember))&&(Not(bcaEvent.Invite_Only__c))),'','None')}">
+                        </div>
+            
+            
+                 
+      <!-- Event Type= MEMBER GUEST, Not deadline, Not Max, Invite Only- INVITED OR CONFIRMED  
+                        <div class="caption" style="display:{!if((Not(idDeadline)&&(Not(isMaxMember))&&(bcaEvent.Event_Type__r.Name =='Member Guest')&&(bcaEvent.Invite_Only__c)&&(isAlreadyInvited)),'','None')}">
+                             <apex:commandButton value="{!RegBtnLabel}" styleClass="button -primary"  action="{!registration}" /> 
+                             <apex:commandButton style="margin:5px;" value="Register Your Guest" styleClass="button -secondary" action="{!RegisterSomeOneElse}"/> 
+                        </div> --> 
+                 
+              </center>
+            
+       </apex:form>
+    </div>
+      <!--</div>-->
+    
+     <!--END Registration Row CONTAINER -->
+  
+  <!-- END RSVP BUTTONS CONTAINER-->
+  
+  
+<!-- FULL DETAILS container -->
+<section id="about" class="about" style="font-size:16px;display:{!IF(Not(idDeadline) && (bcaEvent.Event_Type__r.Name != 'Open') , '', 'None')}">
+    <div class="container">
+
+        <div class="row">
+            <!--Event Tools section -->
+            <div class="col-sm-4" style="color: #ffffff">
+                <br />
+                <h3>Event Tools</h3>
+                <br />
+                <div style="padding-left:15px; display:{!if(bcaEvent.Google_Maps_Link__c != Null,'','None')}">
+                    <span class="glyphicon glyphicon-map-marker"> </span> <strong>Directions </strong>
+                </div>
+                <div style="padding-left:35px; display:{!if(bcaEvent.Google_Maps_Link__c != Null,'','None')}">
+                    <a href="{!bcaEvent.Google_Maps_Link__c}" target="_blank">Click here for directions</a>
+                    <br />
+                </div>
+                <br />
+                <div style="padding-left:15px; display:{!if(bcaEvent.Parking__c != Null,'','None')}">
+                    <span class="glyphicon glyphicon-record"> </span> <strong>Parking </strong>
+                </div>
+                <div style="padding-left:35px; display:{!if(bcaEvent.Parking__c != Null,'','None')}">
+                    <apex:outputText value="{!bcaevent.Parking__c}" escape="false"></apex:outputText>
+                    <br />
+                </div>
+                <br />
+                <div style="padding-left:15px">
+                    <span class="glyphicon glyphicon-eye-open"> </span> <strong>Attire </strong>
+                </div>
+                <div style="padding-left:35px">
+                    <apex:outputText value="{!bcaevent.Dress_Code__c}" escape="false"></apex:outputText>
+                    <br />
+                </div>
+                <br />
+                <div style="padding-left:15px">
+                    <span class="glyphicon glyphicon-question-sign"> </span> <strong>Questions </strong>
+                </div>
+                <div style="padding-left:35px">
+                    <span> <a href="mailto:michelle@bcaphiladelphia.com">Email our Event Director</a></span>
+                    <br />
+                </div>
+                <br />
+                <div style="padding-left:15px; display:{!if(bcaEvent.Linkless_Invite__c != Null,'','None')}">
+                    <span class="glyphicon glyphicon-map-marker"> </span> <strong>Linkless Invite </strong>
+                </div>
+                <div style="padding-left:35px; display:{!if(bcaEvent.Linkless_Invite__c != Null,'','None')}">
+                    <a href="{!bcaevent.Linkless_Invite__c}" target="_blank">Click here to download Linkless Invite</a>
+                    <br></br>
+                </div>
+                <br />
+            </div>
+            <!--END Event Tools section -->
+
+            <!--Speaker, Agenda, Culture section -->
+            <div class="col-sm-8" style="padding-top:15px; padding-left:35px;">
+                <!-- Speaker -->
+               
+                 <div class="row" style="display:{!IF(evntSpeakerList.size!=0, '', 'none')}">
+    <h2>SPEAKER</h2>
+        <div class="col-md-4">
+            <apex:image url="{!IF(bcaEvent.Speaker_headshot_link__c != null, bcaEvent.Speaker_headshot_link__c, $Resource.Placeholder)}"
+                styleClass="img-responsive" style="max-width:100%; height:auto;" />
+        </div>
+    
+        <div class="col-md-8">
+            <apex:repeat value="{!evntSpeakerList}" var="sp">
+                <h4><apex:outputText value="{!sp.Contact__r.name} "></apex:outputText><br /></h4>
+            </apex:repeat>
+            <p>
+                <apex:outputText value="{!bcaEvent.Speaker_Bio__c}" escape="false"></apex:outputText>
+                  <apex:outputPanel rendered="{!NOT(ISBLANK(bcaEvent.Speaker_Blog_Link__c))}">
+  <a href="#" onclick="openPopup()">Click here to learn more</a>
+              </apex:outputPanel>
+           
+            </p>
+            
+           
+        </div>
+</div>
+
+<!-- Popup Modal -->
+<div id="speakerPopup" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closePopup()">&times;</span>
+        <h3>About the Speaker</h3>
+        <p><apex:outputText value="{!bcaEvent.Speaker_Bio__c}" escape="false"></apex:outputText></p>
+        <p>For more information, full bio and videos <a href="{!bcaEvent.speaker_Blog_link__c}" target="_blank">click here</a>.</p>
+    </div>
+</div>
+
+<!-- Styles for the Modal -->
+<style>
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 500px;
+    }
+
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+</style>
+
+<!-- JavaScript for Popup -->
+<script>
+    function openPopup() {
+        document.getElementById("speakerPopup").style.display = "block";
+    }
+
+    function closePopup() {
+        document.getElementById("speakerPopup").style.display = "none";
+    }
+
+    // Close the modal if the user clicks outside of it
+    window.onclick = function(event) {
+        var modal = document.getElementById("speakerPopup");
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+
+               
+             <!--   <div class="row" style="display:{!IF(evntSpeakerList.size!=0, '', 'none')}">
+                    <h2>SPEAKER</h2>
+                    <div class="col-md-4">
+                        <apex:image url="{!IF(bcaEvent.Speaker_headshot_link__c != null, bcaEvent.Speaker_headshot_link__c, $Resource.Placeholder)}"
+                            styleClass="img-responsive" style="max-width:100%; height:auto;" />
+                    </div>
+                    <div class="col-md-8">
+                        <apex:repeat value="{!evntSpeakerList}" var="sp">
+                            <h4><apex:outputText value="{!sp.Contact__r.name} "></apex:outputText><br /></h4>
+                        </apex:repeat>
+                        <p><apex:outputText value="{!bcaEvent.Speaker_Bio__c}" escape="false"></apex:outputText>
+                            <a href="{!bcaEvent.speaker_Blog_link__c}" target="_blank">Click here to learn more</a></p>
+                    </div>
+                </div>
+                <!-- END Speaker -->
+
+                <!--Roundtable ONLY SHOW IF EVENT TYPE=Roundtable-->
+                <div style="display:{!if(bcaEvent.Event_Type__c!=null && bcaEvent.Event_Type__r.Name=='Roundtable','','none')}">
+                    <h2>ROUNDTABLE TOPIC </h2>
+                    <p><span style="font-family: PT Serif; font-size: 14px; color: #6F6F6F;"> {!bcaEvent.Tag_Line__c}</span></p>
+                    <apex:outputText value="{!bcaEvent.Roundtable_Topic__c}" escape="false"></apex:outputText>
+                </div>
+                <!--END Roundtable -->
+
+                <!--Agenda -->
+                <h2 style="align:left; padding-top:0%;">AGENDA</h2>
+                
+                    
+                <div class="col-md-4">
+                     <p style="padding-bottom:0%;">{!bcaEvent.Agenda_Item_1_Time__c}  </p>
+                </div>
+                
+                <div class="col-md-8 ">
+                     <p style="padding-bottom:0%;"> {!bcaEvent.Agenda_Item_1_Description__c}</p>
+                </div>
+                
+                <div class="col-md-4 ">
+                     <p style="padding-bottom:0%;"> {!bcaEvent.Agenda_Item_2_Time__c} </p>
+                </div>
+                <div class="col-md-8 ">
+                     <p style="padding-bottom:0%;">  {!bcaEvent.Agenda_Item_2_Description__c} </p>
+                </div>
+                
+                <div class="col-md-4 ">
+                   <p style="padding-bottom:0%;"> {!bcaEvent.Agenda_Item_3_Time__c} </p>
+                </div>
+                <div class="col-md-8 ">
+                    <p style="padding-bottom:0%;">  {!bcaEvent.Agenda_Item_3_Description__c} </p>
+                </div>
+                <div class="col-md-4 ">
+                   <p style="padding-bottom:0%;">  {!bcaEvent.Agenda_Item_4_Time__c} </p>
+                </div>
+                <div class="col-md-8 ">
+                    <p style="padding-bottom:0%;">  {!bcaEvent.Agenda_Item_4_Description__c}</p>
+                </div>
+                <p></p>
+                <br />
+                <!--END Agenda -->
+
+                <!--Culture -->
+                <div style="display:{!if(bcaEvent.Event_Type__c!=null && bcaEvent.Event_Type__r.Name!='Roundtable','','none')}">
+                    <br />
+                    <h2 style="align:left; padding-top:10%;">CULTURE</h2>
+                    <p style="padding-bottom:5%;">BCA Events are private, exclusive events for use by its members and select invited guests only.
+                        BCA’s Cultural Policies exist to protect the value and privileges of membership and will be enforced at every event.
+                        <a href="https://bcaproud.com/about-bca/guest-policy" target="_blank" escape="false"> Click here to view our cultural and guest policies.</a>
+                    </p>
+                    <p></p>
+                </div>
+                <!--END Culture -->
+            </div>
+            <!--Speaker, Agenda, Culture section -->
+        </div>
+    </div>
+</section>
+
+
+
+
+   
+
+
+ <!-- /END Event date and time container -->
+
+       <br/> 
+
+<!--<MEMBER BLOCK INVITE ONLY - INVITED> -->
+
+
+   <div class="container" style="display:{!if(bcaEvent.Invite_Only__c && (isAlreadyInvited)  ,'','None')} ">
+ <h4>Memberblock Summary </h4>           
+
+ <apex:outputLink style=" text-decoration: none;font-size:12px; float:right; padding-right:5%;padding-top:2%; display:{!if(bcaEvent.Invite_Only__c && (isAlreadyInvited)  ,'','None')}  " styleClass="detail-span" value="/ViewRegistration_List_Page?UserId={!con.id}&EventId={!EventId}" >View full Registration List</apex:outputLink> 
+    
+
+
+            <div class=" panel panel-default ">
+                <div class="row" style="padding-left:2%">
+                    <div class="col-md-6 col-xs-6" style="padding:5px;"> <span>Confirmed </span> <apex:outputLabel styleClass="button -block">  {!totalConfirmed}  </apex:outputLabel>   </div>
+                    <div class="col-md-6 col-xs-6" style="padding:5px;"> <span>Allotment </span>  <apex:outputLabel styleClass="button -block"> {!totalAvailable} </apex:outputLabel>   </div>
+
+        </div>
+         <hr> </hr>
+            <!-- <span style="color: #252525; font-weight:400;">Total Confirmed: {!totalConfirmed}  </span> <br/>
+            <span style="color: #252525; font-weight:400;">Total Available: {!totalAvailable}  </span> -->
+                <div >
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                              <th>Name </th>
+                              <th>Company </th>
+                              <th>Guest of</th>
+                              <th>Status</th>
+                              <th>Action</th> 
+                         </tr>
+                          </thead>
+                        <tbody>
+                            <apex:repeat value="{!EvntRegList}" var="evntReg">
+                                        <tr>
+                                          <th><apex:outputText value="{!evntReg.Contact__r.name}"></apex:outputText></th>
+                                          <td><apex:outputText value="{!evntReg.Contact__r.account.name}"></apex:outputText></td>
+                                          <td><apex:outputText value="{!evntReg.Guest_Of__r.name}"></apex:outputText></td>
+                                          <td><apex:outputText value="{!evntReg.Status__c}"></apex:outputText></td>  
+                                            <td>
+                                                  
+                                  <apex:outputPanel rendered="{!(con.Activation_Team_Role__c == 'Decision Maker' || con.Activation_Team_Role__c == 'ADMINISTRATOR' || evntReg.Contact__c == con.id || evntReg.Guest_Of__c == con.id) && !idDeadline}">
+                                        <a href="/ModifyRegistration?EventId={!eventId}&UserId={!con.id}&erid={!evntReg.id}">Modify RSVP</a>
+                                    </apex:outputPanel> 
+                                         </td>  
+                                        </tr>
+                                        </apex:repeat> 
+                        </tbody>              
+                    </table>
+   <apex:outputLink style="text-decoration: none;font-size:12px; display:{!if(bcaEvent.Invite_Only__c && (isAlreadyInvited)  ,'','None')} " styleClass="detail-span" value="/ViewRegistration_List_Page?UserId={!con.id}&EventId={!EventId}" >View full Registration List</apex:outputLink>  
+            
+            </div>
+            
+    
+
+        </div>
+    </div>
+     
+             
+
+<!--<MEMBER BLOCK NOT INVITE ONLY/>-->
+
+       <div class="container" style="display:{!if(hideDeadLineANDMemberBlock && (bcaEvent.Event_Type__r.Name !='Open') &&  (Not(bcaEvent.Invite_Only__c)) ,'','None')}">
+
+
+   <h4>Memberblock Summary </h4>      
+
+ <apex:outputLink style="<!-- display:{!if(((bcaEvent.Invite_Only__c)&&(isAlreadyInvited)),'','None')} -->; text-decoration: none;font-size:12px; float:right; padding-right:5%;padding-top:2%;" styleClass="detail-span" value="/ViewRegistration_List_Page?UserId={!con.id}&EventId={!EventId}" >View full Registration List</apex:outputLink> 
+    
+
+
+            <div class=" panel panel-default ">
+                <div class="row" style="padding-left:2%">
+                    <div class="col-md-6 col-xs-6" style="padding:5px;"> <span>Confirmed </span> <apex:outputLabel styleClass="button -block">  {!totalConfirmed}  </apex:outputLabel>   </div>
+                    <div class="col-md-6 col-xs-6" style="padding:5px;"> <span>Allotment </span>  <apex:outputLabel styleClass="button -block"> {!totalAvailable} </apex:outputLabel>   </div>
+
+        </div>
+         <hr> </hr>
+            <!-- <span style="color: #252525; font-weight:400;">Total Confirmed: {!totalConfirmed}  </span> <br/>
+            <span style="color: #252525; font-weight:400;">Total Available: {!totalAvailable}  </span> -->
+                <div >
+                   <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Company</th>
+                                <th>Guest of</th>
+                                <th>Status</th>
+                            <th>Action</th> 
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <apex:repeat value="{!EvntRegList}" var="evntReg">
+                                <tr>
+                                    <td><apex:outputText value="{!evntReg.Contact__r.name}" /></td>
+                                    <td><apex:outputText value="{!evntReg.Contact__r.account.name}" /></td>
+                                    <td><apex:outputText value="{!evntReg.Guest_Of__r.name}" /></td>
+                                  <td><apex:outputText value="{!evntReg.Status__c}" /></td>
+                                <td>
+                                                  
+                                  <apex:outputPanel rendered="{!(con.Activation_Team_Role__c == 'Decision Maker' || con.Activation_Team_Role__c == 'ADMINISTRATOR' || evntReg.Contact__c == con.id || evntReg.Guest_Of__c == con.id) && !idDeadline}">
+                                        <a href="/ModifyRegistration?EventId={!eventId}&UserId={!con.id}&erid={!evntReg.id}">Modify RSVP</a>
+                                    </apex:outputPanel> 
+                                         </td>  
+                                 </tr>
+                            </apex:repeat>
+                        </tbody>
+                    </table>
+
+                    
+                       <apex:form >
+
+                          <apex:outputPanel rendered="{!con.Activation_Team_Role__c == 'Decision Maker' && (Not(idDeadline) && (bcaEvent.Event_Type__r.Name !='Open'))}">
+                               <apex:commandButton value="Transfer Tickets" styleClass="button -secondary" action="{!initiateTicketTransfer}"/>
+                               
+                               
+                            </apex:outputPanel> 
+                            
+
+    </apex:form>
+                 
+<div class="caption" style="display:{!IF(idDeadline, '', 'None')}">
+                     <apex:outputLink style="text-decoration: none;font-size:12px;" styleClass="detail-span" value="/ViewRegistration_List_Page?UserId={!con.id}&EventId={!EventId}" >View full Registration List</apex:outputLink>  
+                                        </div>
+
+            </div>
+            
+ 
+
+        </div>
+    </div>
+     
+             
+<!-- /Back to list of event container -->
+      
+<div class="container" style="padding-top:15px;">
+        <center>
+             <apex:outputLink styleClass="button -nav" value="/Home?UserId={!con.id}">Back to List of Events</apex:outputLink>
+        </center>         
+           <h6>  </h6> 
+     <br/>
+ </div>
+ 
+ <div style="padding:100px"> </div>
+<!-- /END Back to list of event container -->
+
+<!-- RSS FEED-->   
+
+
+
+
+                  <!-- <apex:outputPanel rendered="{!EventId == 'a00Hp00001D3n7iIAB'}">
+
+          <div class="powr-rss-feed" id="71762f3f_1728678566"></div><script src="https://www.powr.io/powr.js?platform=html"></script>
+  
+  <div style="padding:20px">
+   </div>
+   </apex:outputPanel> -->
+   
+   
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-85829604-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+  
+ <!-- /FOOTER -->
+   <c:Footer />
+
+    <!-- /END FOOTER -->
+    
+<site:googleAnalyticsTracking />
+</body>
+</apex:page>
