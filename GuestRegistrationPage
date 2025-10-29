@@ -1,0 +1,1395 @@
+<apex:page controller="GuestRegistrationPage_Ctrl" sidebar="false" showHeader="false" standardStylesheets="false" cache="false" id="pg">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*"/>
+
+    <!-- Load jQuery FIRST -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    
+    <!-- Load Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    
+    <!-- Latest Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <!-- Cloud Typography -->
+    <link rel="stylesheet" type="text/css" href="https://cloud.typography.com/6192052/7260552/css/fonts.css" />
+
+    <!-- AddEvent script -->
+    <script type="text/javascript" src="https://cdn.addevent.com/libs/atc/1.6.1/atc.min.js" async="defer"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"/>
+
+    <!-- Google Analytics -->
+    <script src="https://www.googletagmanager.com/gtag/js?id=G-HMMSCCX5V1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-HMMSCCX5V1');
+    </script>
+
+
+
+
+<style>
+            
+           
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    background-color: background-color: #fff;
+}
+
+.navbar-header {
+    background-color: #fff;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+    background-color: #f5f5f5;
+}
+
+
+.modal {
+    text-align: center;
+    padding: 0!important;
+}
+
+.modal:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    margin-right: -4px;
+}
+
+.modal-dialog {
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+}
+
+
+
+
+
+.row-height {
+    display: table;
+    table-layout: fixed;
+    height: 100px;
+    width: 100%;
+}
+
+    
+
+
+.desk { display:none;}
+.mobile{display:block}
+.tdWidth{width:16.66666667%}
+@media screen and (min-width: 480px) {
+    .desk{display:block;}
+    .mobile{display:none;}
+}
+
+
+table {
+    font-size:14px;
+    color:#333333;
+    padding: 8px;
+}
+
+            
+.back-to-top {
+    cursor: pointer;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display:none;
+}
+
+            
+            /* Extra small devices (phones, less than 768px) */
+/* No media query since this is the default in Bootstrap */
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: @screen-sm-min) { ... }
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: @screen-md-min) { ... }
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: @screen-lg-min) { ... }
+               
+               table {
+    font-size:14px;
+    color:#333333;
+    padding: 8px;
+}
+
+
+
+
+.col-lg-12 {
+    background-color: #0087aa;
+}
+
+.col-md-8 {
+    font-family: Gotham Narrow Book, Gotham Narrow SSm B, Helvetica Neue, Helvetica, Roboto, Arial,sans-serif;
+}
+   
+
+
+
+/* ******************************* */
+/* Styles Below Added by Synergema */
+/* ******************************* */
+html {
+    box-sizing: border-box
+}
+
+*,*::after,*::before {
+    box-sizing: inherit
+}
+
+.body {
+    font-feature-settings: "liga", "kern", "pnum", "case";
+    color: #252525;
+       font-family: Gotham Narrow Book, Gotham Narrow SSm B, Helvetica Neue, Helvetica, Roboto, Arial,sans-serif !important
+}
+
+a {
+    color: #0087AA;
+    transition: all 0.2s ease-in-out;
+}
+
+a:hover {
+    color: #015C79;
+}
+
+.container {
+    margin: 0 auto;
+    max-width: 1024px;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+}
+
+.navbar {
+    border: 0;
+    margin: 0 auto 30px auto;
+    padding: 15px 0;
+    position: relative
+}
+
+.navbar .logo {
+    display: inline-block
+}
+
+.navbar .logo>img {
+    height: 2.679em
+}
+
+.menu-toggle {
+    position: static;
+}
+
+.menu-burger {
+    background: transparent;
+    border: 0;
+    position: absolute;
+    top: 50%;
+    right: 1.125em;
+    cursor: pointer;
+    height: 22px;
+    margin-top: -11px;
+    padding: 0;
+    transition: opacity 0.5s ease-in-out;
+    width: 37px;
+    z-index: 998
+}
+
+.menu-burger:hover {
+    height: 41px
+}
+
+.menu-burger:hover .bar.-one {
+    transform: translateY(-2px)
+}
+
+.menu-burger:hover .bar.-three {
+    transform: translateY(20px)
+}
+
+.menu-burger .bar {
+    background: #09091A;
+    display: block;
+    height: 3px;
+    position: absolute;
+    transition: all 0.5s ease-in-out;
+    width: 100%
+}
+
+.menu-burger .bar.-two {
+    transform: translateY(9px)
+}
+
+.menu-burger .bar.-three {
+    transform: translateY(18px)
+}
+
+.menu-popover {
+    top: 70%;
+    right: 20px;
+}
+
+.container-fluid>.navbar-collapse,
+.container-fluid>.navbar-header,
+.container>.navbar-collapse,
+.container>.navbar-header {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.alert {
+    border: 0;
+    border-radius: 0;
+    color: #252525
+}
+
+.alert.alert-info {
+    backgorund-color: #BEDFE8;
+}
+
+.section-header {
+    font-size: 23px;
+    font-weight: 700;
+    line-height: 1.1;
+    font-family: Chronicle SSm A, Chronicle SSm B, Georgia, Cambria, Times New Roman, Times,serif;
+    font-weight: 400;
+    margin-bottom: 20px;
+}
+
+.button {
+    text-transform: uppercase;
+    letter-spacing: .258em;
+    font-size: 13px !important;
+    font-weight: 800;
+    padding: 10px 15px;
+    background-color: #ADADAD;
+    border: 0px solid;
+    border-radius: 0 !important;
+    display: inline-block;
+    letter-spacing: normal;
+    line-height: 1.3;
+    min-height: 45px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out
+}
+
+.button:hover {
+    background-color: #09091A;
+    color: #fff;
+    text-decoration: none
+}
+
+.button.-action {
+    border: 2px solid;
+    padding-right: 60px;
+    position: relative;
+    text-align: left
+}
+
+.button.-action>.arrow {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    border-left: 2px solid;
+    height: 100%;
+    transition: all 0.2s ease-in-out;
+    width: 44px
+}
+
+.button.-action>.arrow>.icon {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 14px;
+    margin: 0 auto;
+    transform: translateY(-50%);
+    transition: all 0.2s ease-in-out;
+    width: 16px
+}
+
+.button.-action:hover>.arrow {
+    border-color: transparent
+}
+
+.button.-primary {
+    background-color: #0087AA;
+    border-color: #0087AA;
+    color: #fff
+}
+
+.button.-primary>.arrow {
+    background-color: #0087AA;
+    border-color: #015C79
+}
+
+.button.-primary:hover {
+    background-color: #09091A;
+    color: #09091A
+}
+
+.button.-secondary {
+    background-color: #0087aa;
+    border-color: #0087aa;
+    color: #ADADAD
+}
+
+.button.-secondary>.arrow {
+    background-color: #09091A;
+    border-color: #ADADAD
+}
+
+.button.-secondary>.arrow>.icon {
+    fill: #ADADAD
+}
+
+.button.-secondary:hover {
+    background-color: #09091A;
+    border-color: #09091A !important;
+    color: #fff
+}
+
+.button.-secondary:hover>.arrow>.icon {
+    fill: #fff
+}
+
+.button.-full {
+    max-width: none;
+    width: 100%
+}
+
+.button.-nav {
+    background-color: #fff;
+    border-color: #fff;
+    color: #0087AA
+}
+
+.button.-nav:hover {
+    background-color: #0087AA;
+    color: #fff
+}
+
+
+
+
+.section {
+    padding-bottom: 75px;
+    padding-top: 75px
+}
+
+.section-alt {
+    background-color: #f1f1f1;
+}
+
+.footer-main {
+    padding: 4.167em 0;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    color: #fff;
+    background: #09091A;
+    font-size: 0.714em
+}
+
+h1,h2,h3 {
+    margin-top: 0
+}
+
+form {
+    width: 100%
+}
+
+[type='color'],[type='date'],[type='datetime'],[type='datetime-local'],[type='email'],[type='month'],[type='number'],[type='password'],[type='search'],[type='tel'],[type='text'],[type='time'],[type='url'],[type='week'],input:not([type]),textarea,textarea {
+    width: 100%
+}
+
+@media screen and (max-width: 767px) {
+    [type='color'],[type='date'],[type='datetime'],[type='datetime-local'],[type='email'],[type='month'],[type='number'],[type='password'],[type='search'],[type='tel'],[type='text'],[type='time'],[type='url'],[type='week'],input:not([type]),textarea,textarea {
+        font-size: 16px
+    }
+}
+
+select {
+    width: 100%
+}
+
+label {
+    display: block
+}
+
+.form .row::after {
+    clear: both;
+    content: "";
+    display: block
+}
+
+.form .group {
+    margin-bottom: 15px;
+    position: relative
+}
+
+@media screen and (min-width: 480px) {
+    .form .group.-split {
+        float:left;
+        display: block;
+        margin-right: 1.75422%;
+        width: 49.12289%
+    }
+
+    .form .group.-split:last-child {
+        margin-right: 0
+    }
+
+    .form .group.-split:nth-child(2n) {
+        margin-right: 0
+    }
+
+    .form .group.-split:nth-child(2n+1) {
+        clear: left
+    }
+
+    .form .group.-split:nth-child(odd) {
+        padding-right: 0.952em
+    }
+
+    .form .group.-split:nth-child(even) {
+        padding-left: 0.952em
+    }
+}
+
+.form .label {
+    text-transform: uppercase;
+    letter-spacing: 1.84726px;
+    color: #09091A;
+    display: block;
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 1.6;
+    padding-top: 0;
+    text-align: left;
+    white-space: normal
+}
+
+.form .input.-text {
+    padding: 10px;
+    background: transparent;
+    border-radius: 0 !important;
+    border: 2px solid #09091A !important;
+    font-size: 16.8px;
+    height: auto !important
+}
+
+.form .input.-select {
+    padding: 10px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: transparent url(/assets/img/icon-select-arrow.svg) right center no-repeat;
+    border: 2px solid #09091A;
+    border-radius: 0;
+    position: relative;
+    width: 100%
+}
+
+.form.-login {
+    padding: 40px;
+    background-color: rgba(255,255,255,0.75);
+    color: #09091A;
+    margin: 0 auto;
+    max-width: 380px;
+    text-align: left
+}
+
+.form.-login .input.-text {
+    border-color: #09091A
+}
+
+.form .actions {
+    margin-bottom: .893em
+}
+
+.panel {
+    padding: 50px;
+    background-color: #fff;
+    border-radius: 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    margin: 0 auto;
+    max-width: 74em
+}
+
+.text.-p-xsm {
+    font-size: 12.6px;
+    line-height: 1.3
+}
+
+/* ******************************* */
+/* Styles Above Added by Synergema */
+/* ******************************* */
+
+
+
+/* About (Event tools section)
+============================================== */
+.about {
+   background: url("https://c.na30.visual.force.com/resource/1475519123000/Background_light") no-repeat bottom center;
+  background-size: cover;
+  background-color: rgba(255, 255, 255, 0.2);
+  text-align: left;
+  padding: 0px 0;
+  font-family: Gotham Narrow Book, Gotham Narrow SSm B, Helvetica Neue, Helvetica, Roboto, Arial,sans-serif;
+  min-height:100%;
+  border-top:0px solid #ddd;
+  border-bottom:1px solid #ddd;
+  -webkit-background-size: cover;
+-moz-background-size: cover;
+-o-background-size: cover;
+background-size: cover;
+}
+
+.about .fig-profile {
+  max-width: 100px;
+  max-height: 100px;
+  margin: 0 auto 0;
+  position: relative;
+  overflow: hidden !important;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  margin-bottom: 25px;
+}
+.about .fig-profile:hover figcaption {
+  opacity: 1;
+  webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+  background-color: #1fa7bf;
+}
+.about .fig-profile figcaption {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  border-radius: 50%;
+  text-align: center;
+  vertical-align: center;
+  line-height: 100px;
+  opacity: 0;
+  font-family:  PT Serif;
+  height: 100%;
+  webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+  color: #fff;
+  font-size: 14px;
+}
+.about .name {
+  font-size: 30px;
+  font-family:  PT Serif;
+  margin: 10px 0 0 0;
+}
+
+.about .caption{
+    font-size:14px;
+    line-height: 10px
+ }
+    
+.about .position {
+  margin: 0;
+}
+
+.about .location {
+  margin: 0px 0 0px 0;
+}
+
+
+.about .slogan {
+  font-family:  PT Serif;
+  margin-bottom: 10px;
+  margin-top: 10px;
+ 
+}
+.about p {
+  font-size: 14px;
+   font-family: Gotham Narrow Book, Gotham Narrow SSm B, Helvetica Neue, Helvetica, Roboto, Arial,sans-serif;
+}
+
+.about h1 {
+  font-size: 18px;
+    font-family: Gotham Narrow Bold, Gotham Narrow SSm B, Helvetica Neue, Helvetica, Roboto, Arial,sans-serif;
+  font-weight: 100;
+}
+
+
+.about h2 {
+  font-size: 16px;
+  color: #0087aa;
+    font-family: Gotham Narrow Bold, Gotham Narrow SSm B, Helvetica Neue, Helvetica, Roboto, Arial,sans-serif;
+  font-weight: 400;
+}
+
+.about h3 {
+  font-size: 18px;
+   font-family: Chronicle SSm A, Chronicle SSm B, Georgia,Cambria,Times New Roman, Times,serif;
+}
+
+.col-sm-4 {
+    background-color: #252525;
+    height:450px;
+    width:275px;
+   font-family: Gotham Narrow Book, Gotham Narrow SSm B, Helvetica Neue, Helvetica, Roboto, Arial,sans-serif;
+    font-size: 13px;
+   
+}
+
+
+
+
+/* ******************************* */
+/* Event Style  */
+/* ******************************* */
+
+
+.event {
+  background-color: rgba(255, 255, 255, 0.2);
+  text-align: left;
+  padding: 50px 0;
+  font-family: Gotham Narrow Book, Gotham Narrow SSm B, Helvetica Neue, Helvetica, Roboto, Arial,sans-serif;
+  min-height:100%;
+  -webkit-background-size: cover;
+-moz-background-size: cover;
+-o-background-size: cover;
+background-size: cover;
+}
+
+
+
+.event .position {
+  margin: 0;
+}
+
+.event .location {
+  margin: 0px 0 0px 0;
+}
+
+
+ 
+}
+.event p {
+  font-size: 14px;
+   font-family: Gotham Narrow Book, Gotham Narrow SSm B, Helvetica Neue, Helvetica, Roboto, Arial,sans-serif;
+}
+
+.event h1 {
+  font-size: 22px;
+    font-family:PT Serif, Chronicle SSm A,  Chronicle SSm B, Georgia,Cambria,Times New Roman, Times,serif;
+  font-weight: 100;
+}
+
+
+.event h2 {
+  font-size: 14px;
+  text-align: center;
+  color: #0087aa;
+  font-family: Gotham Narrow Bold, Gotham Narrow SSm B, Helvetica Neue, Helvetica, Roboto, Arial,sans-serif;
+  font-weight: 400;
+  padding-top: 25px;
+}
+
+.event h3 {
+  font-size: 18px;
+   font-family: Chronicle SSm A, Chronicle SSm B, Georgia,Cambria,Times New Roman, Times,serif;
+}
+
+
+/* ******************************* */
+/* Event Style  ABOVE */
+/* ******************************* */
+
+
+
+
+/* ******************************* */
+/* Alert Bar Styles  */
+/* ******************************* */
+
+
+.alert-info {
+   width:100%;   
+    
+}
+
+.alert-warning {
+   width:100%;   
+   background-color: #B3B6B7;
+   color: #252525;
+   padding: 5px;
+   float:center;
+   font-size:14px;
+   font-family: Gotham Narrow Book, Gotham Narrow SSm B, Helvetica Neue, Helvetica, Roboto, Arial,sans-serif;
+    
+}
+
+.alert-success {
+   width:100%;   
+   background-color: #efefef;
+   color: #252525;
+   padding: 10px;
+
+
+}
+   
+    
+}
+
+
+/* Custom Dropdown Styling */
+.custom-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-btn {
+    background-color: #000000;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 0px;
+}
+
+.dropdown-btn:hover {
+    background-color: #0087aa;
+        border-radius: 0px;
+
+}
+
+/* Hidden by default */
+.custom-dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    border-radius: 0px;
+    padding: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    min-width: 200px;
+    list-style: none;
+    padding-left: 0;
+}
+
+.custom-dropdown-menu li {
+    padding: 8px 12px;
+}
+
+.custom-dropdown-menu li a {
+    text-decoration: none;
+    color: black;
+    display: block;
+    width: 100%;
+}
+
+.custom-dropdown-menu li a:hover {
+    background: #0087aa;
+    color: white;
+        border-radius: 0px;
+
+}
+
+/* When dropdown is open */
+.custom-dropdown-menu.show {
+    display: block !important;
+}
+
+/* Default layout: Keep text inline */
+    .deadline-label, .deadline-date {
+        display: inline;
+        font-size: 1.5rem;
+    }
+
+    /* On mobile screens, stack the date below the label */
+    @media (max-width: 768px) {
+        .deadline-label, .deadline-date {
+            display: block;
+            text-align: center; /* Keep it centered */
+        }
+    }
+
+  /* Customize Modal */
+        .custom-modal .modal-content {
+  /*          background-color: #0087aa; Dark Background */
+            color: #0087aa;/* Light Text */
+            border-radius:0px;
+                        border-radius:0px;
+
+        }
+        
+        .custom-modal .modal-body {
+            background-color: #ffffff; /* Dark Background */
+            color: #000000;/* Light Text */
+            border-radius:0px;
+            font-size:16px;
+                        border-radius:0px;
+
+        }
+
+        /* Customize Modal Header */
+        .custom-modal .modal-header {
+            background-color: #ffffff; /* Blue Header */
+            color: white; /* White Text */
+            border-bottom: 2px solid #0056b3; /* Darker Blue Border */
+                        border-radius:0px;
+
+        }
+
+        /* Customize Modal Footer */
+        .custom-modal .modal-footer {
+            background-color: #ffffff; /* Dark Gray Footer */
+            border-top: 1px solid #444; /* Light Border */
+                        border-radius:0px;
+
+        }
+
+        /* Customize Close Button */
+        .custom-modal .btn-close {
+            filter: invert(1); /* Makes close button white */
+                border-radius:0px;
+        }
+
+     
+
+        /* MOBILE RESPONSIVE DESIGN */
+        @media screen and (max-width: 768px) {
+            .modal-content {
+                width: 90%;  /* Make the modal take up most of the screen */
+                margin: 15% auto; /* Adjust spacing */
+                padding: 15px;
+                font-size: 18px; /* Slightly smaller text for better fit */
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .modal-content {
+                width: 95%;
+                margin: 20% auto;
+                padding: 10px;
+                font-size: 18px; /* Reduce text size slightly */
+            }
+        }
+
+/* ******************************* */
+/* Alert Bar Styles ABOVE  */
+/* ******************************* */
+
+
+
+        </style>
+<!-- End -->
+
+<link rel="stylesheet" type="text/css" href="{!$Resource.Skin}" />
+
+<head>
+
+</head>
+
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PM7NHHTD"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+ <c:Nav_Bar_Guest />
+
+
+
+
+    <script>
+    function home(){window.open('/contactprofile?UserId={!con.id}',"_self");}
+    </script>
+
+
+     
+ <div class="header-container">
+        <div class="logo-container">
+            <apex:image styleClass="logo" style="max-height:150px; max-width:150px" url="{!$Resource.BCA20}" alt="BCA" />
+        </div>
+        <div class="user-info">
+            {!con.Name}, {!con.Account.Name}
+        </div>
+    </div>
+
+
+ <!-- STATUS CONTAINER -->
+              
+                <div class="row" style="background-color:#0087aa; padding:10px; color:#eeeeee">
+
+<div class="col-md-12" style="text-align:center"> {!EvntStatus}, as a guest of  <b>{!EvntReg.Guest_Of__r.Name} </b><br/>
+     <center> <i>This is a private event for BCA Members and their invited guests only.</i></center>
+
+</div>
+
+  </div>
+
+
+                <!-- END STATUS CONTAINER -->
+       
+               
+  
+  
+<!-- Exeperience Title Date, Time, Location -->
+  
+  <section>
+    <div class="container">
+        <div class="event">  <!-- Reintroduced the event wrapper -->
+            <div class="row">
+                <!-- Left Column: Event Description -->
+                <div class="col-md-8" style="padding-left:55px; padding-right:55px;">
+                    <center>
+                        <h1><b>{!bcaEvent.name}</b></h1>
+                    </center>
+                    <center>
+                        <img class="img-responsive" src="https://bcaproud.com/wp-content/themes/baseline2120/assets/images/divider.svg" alt="Logo" style="max-width:105px; max-height:50px; padding:5px"/>
+                    </center>
+                    <br/>
+                    <p>
+                        <apex:outputText value="{!bcaEvent.Event_Description__c}" escape="false"></apex:outputText>
+                    </p>
+                </div>
+
+                <!-- Right Column: Date, Time, and Location -->
+                <div class="col-md-4">
+                    <h2>DATE AND TIME</h2>
+                    <center>
+                        <apex:outputText value="{0,date,EEEE',' MMMM d',' yyyy}"> 
+                            <apex:param value="{!bcaEvent.Event_Date__c}" /> 
+                        </apex:outputText>
+                    </center>
+                    <center>
+                        <apex:outputText style="font-size:14px" value="{!bcaEvent.Start_Time__c} - {!bcaEvent.End_Time__c}"/>
+                    </center>
+                    <h2>LOCATION</h2>
+                    <center>
+                        <apex:outputText style="font-size:14px" value="{!bcaEvent.Venue__c}"/>
+                    </center>
+                    <center>
+                        <apex:outputText style="font-size:14px" value="{!bcaEvent.Venue_Address__c}"/>
+                    </center>
+
+                    <div style="display:{!if(ISBLANK(bcaEvent.Virtual_URL__c),'none','block')}">
+                        <center><a href="{!bcaEvent.Virtual_URL__c}">Click Here for Virtual Link</a></center>
+                    </div>
+
+                    <center>
+                        <img class="img-responsive" src="{!bcaEvent.Event_Host_Logo__c}" alt="Host Logo" style="max-width:155px; max-height:155px; padding:15px"/>
+                    </center>
+                </div>
+            </div>
+        </div> <!-- Closing .event -->
+    </div>
+</section>
+
+<br/>
+<br/>
+
+    <!-- END Exeperience Title Date, Time, Location Header -->
+
+
+    
+<!-- REG Deadline Row CONTAINER-->
+         <div class="alert-warning" style="display:{!IF(Not(idDeadline) && (bcaEvent.Event_Type__r.Name !='Open'), '', 'None' )}; font-size:14px;">
+
+             <center> <span class="glyphicon icon-info"></span>     
+             <apex:outputText value="Registration Deadline:"></apex:outputText>
+             <apex:outputText value=" {0,date,EEEE',' MMMM d',' yyyy}">
+             <apex:param value="{!bcaEvent.Deadline__c}" />  </apex:outputText> </center>
+          </div>
+
+<!-- END REG Deadline Row CONTAINER-->  
+ 
+
+<!-- Registration Row-->
+    
+  <div class="alert-success">
+      <div class="caption" >
+                            <!-- style="display:{!if(att.id != null,'','None')}" -->
+            <apex:form >
+               <div class="row">
+                 <center>
+                 
+     <!-- Not deadline, Not Max, Not Invite Only -->       
+               <!-- <div class="caption" style="display:{!if((Not(idDeadline)&&(Not(isMaxMember))&&(bcaEvent.Event_Type__r.Name !='Open')&&(Not(bcaEvent.Invite_Only__c))),'','None')}">
+                            <apex:commandButton value="{!RegBtnLabel}" styleClass="button -primary" title="RSVP" action="{!registration}">     </apex:commandButton>
+                            <apex:commandButton style="margin:5px;" value="Register Someone" styleClass="button -secondary" action="{!RegisterSomeOneElse}"/>
+                            <apex:commandButton value="Invite Someone" styleClass="button -secondary" action="{!invitesomeoneelse}"/>
+                </div>-->
+                        
+                        
+       <!-- Not deadline, Not Max, Not Invite Only -->
+            
+                              <div class="caption" style="display:{!if((Not(idDeadline)&&(Not(isMaxMember))),'','None')}">
+                                 <apex:commandButton value="{!RegBtnLabel}" styleClass="button -primary"  action="{!registration}" />
+                                    <!--<span style="font-size:12px; line-height:20px">
+                                    <br/>
+                                     <apex:outputText value="Registration Deadline:"></apex:outputText>
+                                     <apex:outputText value=" {0,date,EEEE',' MMMM d',' yyyy}">
+                                     <apex:param value="{!bcaEvent.Deadline__c}" />  </apex:outputText>    
+                             </span> -->
+                              </div> 
+   <!-- IS DEADLINE NOT CONFIRMED-->
+                            <div class="caption" style="display:{!IF(idDeadline &&(EvntReg.Status__c != 'Confirmed'), '', 'None')}">
+
+                             <!--  <div class="caption" style="display:{!IF(idDeadline, '', 'None')}"> -->
+                             
+                                <span class="alert " style="font-size:14px">
+                                <apex:outputText value="Registration is closed. If you have any questions, please contact BCA at events@bcaphiladelphia.com" /></span>
+                              </div>
+                           
+                              
+                         <!-- Deadline, CONFIRMED -->                        
+                        <div class="caption" style="display:{!IF(idDeadline &&(EvntReg.Status__c == 'Confirmed'), '', 'None')}">
+                               <span class="alert" style="font-size:14px">
+                            Registration is closed. {!EvntStatus}</span><br></br>
+                            <apex:commandButton value="{!RegBtnLabel}" styleClass="button -primary" title="RSVP" action="{!registration}">     </apex:commandButton>
+                        </div>
+                                 
+                        
+                              
+    <!-- NOT DEADLINE, IS MAX, NOT DECLINED, NOT CONFIRMED -->                         
+                              <div class="caption" style="display:{!if((( Not(idDeadline)&&(isMaxMember)&&(EvntReg != null)&&((EvntReg.Status__c != 'Declined')&&(EvntReg.Status__c != 'Confirmed')) )),'','None' ) }" >
+                                <span class="alert" style="font-size:14px">
+                                  <apex:outputText value="We apologize, the max number of registrations has been reached. Questions, please contact your inviting member or events@bcaphiladelphia.com." />
+                                </span>
+                              </div>
+     <!-- NOT DEADLINE, IS MAX, CONFIRMED OR DECLINED -->                          
+                            <div class="caption" style="display:{!if((( Not(idDeadline)&&(isMaxMember)&&(EvntReg != null)&&((EvntReg.Status__c == 'Confirmed')||(EvntReg.Status__c == 'Declined')) )),'','None' ) }" >
+                               <apex:commandButton value="{!RegBtnLabel}" styleClass="button -primary"  action="{!registration}" />
+
+ <span class="alert" style="font-size:14px">
+                                  <apex:outputText value="{!EvntReg.Status__c}" />
+                                </span>
+                            </div>
+                            
+                            
+                    </center>
+                </div>
+          
+            </apex:form>
+</div>
+  </div>
+
+   <!--END Registration Row-->
+   
+   
+<!-- Registration Row CONTAINER
+ <div class="alert-success">
+    
+
+            <apex:form >
+               <div class="row">
+                    
+                          <div class="caption" style="display:{!if((Not(idDeadline)&&(Not(isMaxMember))),'','None')}">
+                              <apex:commandButton value="{!RegBtnLabel}" styleClass="button -primary"  action="{!registration}" />
+                          </div> 
+                          
+                          <div class="caption" style="display:{!IF(idDeadline, '', 'None')}">
+                            <span class="alert" style="font-size:14px">
+                            <apex:outputText value="Registration is closed. If you have any questions, please contact BCA at events@bcaphiladelphia.com" /></span>
+                          </div>
+                         
+                            
+                          <div class="caption" style="display:{!if((( Not(idDeadline)&&(isMaxMember)&&(EvntReg != null)&&((EvntReg.Status__c != 'Declined')&&(EvntReg.Status__c != 'Confirmed')) )),'','None' ) }" >
+                            <span class="alert" style="font-size:14px">
+                              <apex:outputText value="We apologize, the max number of registrations has been reached. Questions, please contact your inviting member or events@bcaphiladelphia.com." />
+                            </span>
+                          </div>
+                          
+                          <div class="caption" style="display:{!if((( Not(idDeadline)&&(isMaxMember)&&(EvntReg != null)&&((EvntReg.Status__c == 'Confirmed')||(EvntReg.Status__c == 'Declined')) )),'','None' ) }" >
+                            <span class="alert" style="font-size:12px">
+                             <apex:outputText value="RSVP Status: {!EvntReg.Status__c}" />
+                            </span>
+                          </div>  
+                      </div> 
+             
+         
+             
+            </apex:form>
+       
+  </div>
+
+   END Registration Row-->
+   
+
+  
+<!-- EVENT SECTION- Tools, Agenda, Speaker Section -->
+
+    
+     <!--Event Tools  -->
+  
+<section id="about" class="about">
+    <div class="container">
+          <div class="row" >
+            <div class="col-sm-4" style="color: #ffffff">
+                <br/>
+                <h3>Event Tools</h3>
+                <br/>
+                
+                <div style="padding-left:15px">
+<i class="fa fa-map-marker"></i> <strong>Directions</strong>
+                </div>
+                <div style="padding-left:35px">
+                  <a href="https://www.maps.google.com" target="_blank">Click here for directions</a>
+                    <br/>
+                </div>
+        
+                <br/>
+                
+                <div style="padding-left:15px">
+            <i class="bi bi-record-circle-fill"></i> <strong>Parking and Arrival</strong>
+
+                </div>
+                
+                  <!-- Link to trigger the modal -->
+                <div style="padding-left:35px">
+
+               <span styleClass="mobile-subtext">
+                <a href="#" data-bs-toggle="modal" data-bs-target="#myModal" >Click Here for Details</a>
+                </span>
+                <!-- Modal Structure -->
+                <div class="modal fade custom-modal" id="myModal" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <!-- <div class="modal-header">
+                                <h5 class="modal-title">Parking &amp; Arrival</h5> Use &amp; for safe HTML rendering 
+                                <button type="button" class="button -primary" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div> -->
+                            <div class="modal-body">
+                                <!-- ARRIVAL Section -->
+                                <h3 style="color:#0087aa"><strong>ARRIVAL</strong></h3>
+                                <div id="arrivalContent"></div>
+                                <hr/>
+                
+                                <!-- PARKING Section -->
+                                <h3 style="color:#0087aa">PARKING</h3>
+                                <div id="parkingContent"></div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="button -primary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                    
+                    <!-- Bootstrap 5.3 JS (Popper included) -->
+                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+                    
+                    <script>
+                        // Inject rich text separately into ARRIVAL and PARKING sections
+                        document.getElementById('arrivalContent').innerHTML = `{!bcaEvent.Directions__c}`;
+                        document.getElementById('parkingContent').innerHTML = `{!bcaEvent.Parking__c}`;
+                    </script>
+                    
+                              
+                
+                <br/>
+               
+                <div style="padding-left:15px">
+                    <i class="bi bi-eye"></i> <strong>Attire</strong>
+                </div>
+                
+                <div style="padding-left:35px">
+                  <apex:outputText value="{!bcaevent.Dress_Code__c}" escape="false"></apex:outputText>
+                  <br/>
+                </div> 
+                
+                 <br/>
+               
+                <div style="padding-left:15px">
+                <i class="bi bi-question-circle"></i> <strong>Questions</strong>
+                </div>
+                
+                <div style="padding-left:35px">
+                 <span > <a href="mailto:celeste@bcaphiladelphia.com">Email our Experience Manager</a></span>
+
+                  <br/>
+                </div> 
+      </div>       
+   <!--END Event Tools -->
+   
+   
+   <!--Event Speaker, topic agenda -->
+          
+            
+          
+    <!-- Speaker-->
+    
+    <div class="col-sm-8" style="padding-top:15px; padding-left:35px; display: flex; flex-direction: column;">
+        <div class="row" style="display:{!IF(evntSpeakerList.size!=0, '', 'none')}">
+            <h2>SPEAKER</h2>
+            <apex:repeat value="{!evntSpeakerList}" var="speaker">
+                <div class="speaker-container" style="overflow: hidden;">
+                 <h3><b>{!speaker.Contact__r.Name}</b></h3>
+                    <p><i>{!speaker.Contact__r.Title}</i></p>
+                    
+                    <apex:outputPanel rendered="{!NOT(ISBLANK(SpeakerDetailsMap[speaker.Contact__c].Speaker_Headshot_Link__c))}">
+                        <img src="{!SpeakerDetailsMap[speaker.Contact__c].Speaker_Headshot_Link__c}" 
+                             style="width: 125px; height: 125px; object-fit: cover; object-position: top center; 
+                                    border: 1px solid #ddd; float: left; margin-right: 15px; margin-bottom:5px;" />
+                    </apex:outputPanel>
+
+
+                   
+                   
+                  
+                    <p><strong></strong> {!IF(SpeakerDetailsMap[speaker.Contact__c] != null, SpeakerDetailsMap[speaker.Contact__c].Bio__c, 'No bio available')} 
+                     <apex:outputLink value="{!IF(SpeakerDetailsMap[speaker.Contact__c] != null, SpeakerDetailsMap[speaker.Contact__c].Speaker_Blog_Link__c, '')}" 
+                                         rendered="{!NOT(ISBLANK(SpeakerDetailsMap[speaker.Contact__c].Speaker_Blog_Link__c))}">
+                            Click here to learn more
+                        </apex:outputLink>
+                        </p>
+                    <p>
+                       
+                    </p>
+                    <hr style="clear: both;"/>
+                </div>
+            </apex:repeat>
+        </div>
+        
+        
+        <!-- END SPEAKER -->
+                
+        <!--END Speaker -->
+                  
+         <h2>AGENDA</h2>
+                <div class="row d-flex align-items-start">
+                    <div class="col-4 col-md-3 d-flex align-items-start">
+                        <p>{!bcaEvent.Agenda_Item_1_Time__c}</p>
+                    </div>
+                    
+                    <div class="col-8 col-md-9 d-flex align-items-start">
+                        <p>{!bcaEvent.Agenda_Item_1_Description__c}</p>
+                    </div>
+                            
+                    <div class="col-4 col-md-3 d-flex align-items-start">
+                        <p>{!bcaEvent.Agenda_Item_2_Time__c}</p>
+                    </div>
+                    
+                    <div class="col-8 col-md-9 d-flex align-items-start">
+                        <p>{!bcaEvent.Agenda_Item_2_Description__c}</p>
+                    </div>
+                    
+                    <div class="col-4 col-md-3 d-flex align-items-start">
+                        <p>{!bcaEvent.Agenda_Item_3_Time__c}</p>
+                    </div>
+                    
+                    <div class="col-8 col-md-9 d-flex align-items-start">
+                        <p>{!bcaEvent.Agenda_Item_3_Description__c}</p>
+                    </div>
+                    
+                    <div class="col-4 col-md-3 d-flex align-items-start">
+                        <p>{!bcaEvent.Agenda_Item_4_Time__c}</p>
+                    </div>
+                    
+                    <div class="col-8 col-md-9 d-flex align-items-start">
+                        <p>{!bcaEvent.Agenda_Item_4_Description__c}</p>
+                    </div>
+                                               
+                  <hr style="clear: both;"/>
+               </div>
+
+                <!--Culture -->
+                <div style="display:{!if(bcaEvent.Event_Type__c!=null && bcaEvent.Event_Type__r.Name!='Roundtable','','none')}">
+                    <br />
+                    <h2 style="align:left; padding-top:0%;">CULTURE</h2>
+                    <p style="padding-bottom:5%;">BCA Events are private, exclusive events for use by its members and select invited guests only.
+                        BCA’s Cultural Policies exist to protect the value and privileges of membership and will be enforced at every event.
+                        <a href="https://bcaproud.com/about-bca/guest-policy" target="_blank" escape="false"> Click here to view our cultural and guest policies.</a>
+                    </p>
+                    <p></p>
+                </div>
+                <!--END Culture -->
+             
+       
+       
+      
+            
+                
+            </div>
+            
+         </div>
+         
+         <!--END Event Speaker, topic, agenda -->
+
+    </div>
+
+  
+ </section>
+
+    <!--END Event Tools & Agenda SECTION -->
+
+    
+    
+
+    <section class="section section-alt">
+        <div class="container">
+           
+        </div>
+        <br/>
+
+        <div class="container">
+         
+        </div>
+      
+    </section>
+    
+
+   
+   <!-- /FOOTER -->
+ 
+  
+ <c:Footer_Guest />
+
+<!-- This site is converting visitors into subscribers and customers with OptinMonster - https://optinmonster.com -->
+<script>(function(d,u,ac){var s=d.createElement('script');s.type='text/javascript';s.src='https://a.omappapi.com/app/js/api.min.js';s.async=true;s.dataset.user=u;s.dataset.account=ac;d.getElementsByTagName('head')[0].appendChild(s);})(document,269005,286613);</script>
+<!-- / https://optinmonster.com -->
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var myCarousel = new bootstrap.Carousel(document.getElementById('carouselExampleIndicators'));
+  });
+</script>
+
+
+    <!-- /END FOOTER -->
+
+</body>
+</apex:page>
